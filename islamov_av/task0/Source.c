@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
- main() {
+void main() {
     double x1, y1, x2, y2, r1, r2, dist;
     printf("VVedite koordinati:");
     printf("x1 y1 r1 x2 y2 r2: ");
