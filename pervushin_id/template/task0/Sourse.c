@@ -11,7 +11,7 @@ int main(void) {
     rmax = fmax(r1, r2);
     rmin = fmin(r1, r2);
     if (r1 < 0 || r2 < 0) {
-        printf("error, try again");
+        printf("error, try again");//
     }
     else if (r1 == r1 && x1 == x2 && y1 == y2) {
         printf("circles matches"); //окружности совпадают
