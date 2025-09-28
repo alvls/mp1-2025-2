@@ -1,4 +1,3 @@
-#include <conio.h>
 #include <math.h>
 #include <stdio.h>
 
@@ -17,6 +16,5 @@ int main()
 	else if (k > D) printf("The circles intersecting");
 	if (k == D) printf("The circles touching");
 	if (k < D) printf("The circles don't intersect");
-	_getch(0);
 	return 0;
 }
