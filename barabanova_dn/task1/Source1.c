@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#define p_dsp 700     // плотность дсп из интернета 
-#define p_dvp 800     // плотность двп из интернета
-#define p_wood 720    // плотность дерева из интернета
+#define p_dsp 700     // density dsp from the internet 
+#define p_dvp 800     // density dvp from the internet
+#define p_wood 720    // density wood from the internet
 
 #define t_dsp 0.015
 #define t_dvp 0.005
