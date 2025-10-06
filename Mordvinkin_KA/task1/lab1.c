@@ -18,7 +18,8 @@ int main()
 	// данные дл€ боковинок
 	double d, t2 = 15, p2 = 600;  // d - глубина, t2 - толщина, p2 - плность дсп (информаци€ с интернета)
 	t2 = t2 / 1000;
-	scanf("%lf", &d);
+	scanf("%lf", d);
+	d /= 100;
 	double v2 = 0, m2 = 0;
 	v2 = h * d * t2;  // объем  одной боковой стенки
 	m2 = p2 * v2 * 2;  // масса двух боковых стенок
@@ -32,21 +33,21 @@ int main()
 	// две двери из дерева
 	double p3 = 550; // средн€€ плотность дерева
 	double t4 = 1;
-	t4 /= 1000;
+	t4 /= 100;
 	double v4, m4;
 	v4 = h * w * t4;
 	m4 = v4 * p3;
 
 	// расчет полок в шкафу
 	int k = 0;
-	if (ch % 40 == 0) k = ch / 40;
-	else k = (ch / 40) + 1;
+	k = ch / 40;
 	double v5 = 0, m5 = 0;
 	v5 = w * d * t3;
-	m5 = v5 * p2;
+	m5 = v5 * p2 * k;
 
 	double m = 0;
 	m = m1 + m2 + m3 + m4 + m5;
-	printf("%lf", m);
+	printf("Cabinet weight: ");
+	printf("%.2lf", m);
 	return 0;
 }
