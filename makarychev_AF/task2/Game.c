@@ -56,8 +56,8 @@ void main()
 						scanf_s(" %c", &cha, 1);
 						switch (cha)
 						{
-						case '<':b = otg; break;
-						case '>':a = otg; break;
+						case '<':b = otg;break;
+						case '>':a = otg;break;
 						case '=':
 							printf("Я отгадал число! У меня получилось за %d попыток\n", count);
 							break;
@@ -75,8 +75,8 @@ void main()
 						scanf_s(" %c", &cha, 1);
 						switch (cha)
 						{
-						case '<':b = otg; break;
-						case '>':a = otg; break;
+						case '<':b = otg;break;
+						case '>':a = otg;break;
 						case '=':
 							printf("Я отгадал число! У меня получилось за %d попыток\n", count);
 							break;
