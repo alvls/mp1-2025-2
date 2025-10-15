@@ -4,7 +4,7 @@
 int main() {
     double r1, r2, x1, y1, x2, y2, d;
     printf("napishite: x1 y1 r1 x2 y2 r2.(cherez probel and bez tochki)");
-    scanf_s("%lf %lf %lf %lf %lf %lf", &x1, &y1, &r1, &x2, &y2, &r2);
+    scanf("%lf %lf %lf %lf %lf %lf", &x1, &y1, &r1, &x2, &y2, &r2);
     double sum = r1 + r2;
     double raz = abs(r1 - r2);
     d = pow((pow(abs(x1 - x2), 2) + pow(abs(y1 - y2), 2)), 0.5);
