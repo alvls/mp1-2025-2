@@ -2,6 +2,7 @@
 #include <math.h>
 #include <locale.h>
 
+
 int main() {
     setlocale(LC_ALL, "Ru");
     double x1, y1, r1;
