@@ -22,9 +22,7 @@ void main() {
 	dveri = h * w * 1 * 0.01 * Pderev * 2;
 	vnpol = (w-30*0.1*0.01) * (d-5*0.1*0.01) *15 * 0.1 * 0.01 * Pdsp * n;
 	ves = zdst + bok + krshk + dveri + vnpol;
-	printf("%f %d\n", ves, n);
+	printf("%f\n",ves);
 	system("pause");
-
-
 
 }	
