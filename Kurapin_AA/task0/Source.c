@@ -4,6 +4,7 @@
 
 int main()
 {
+	system("chcp 1251");
 	setlocale(LC_ALL, "Rus");
 
 	double x1, y1, R1, x2, y2, R2;

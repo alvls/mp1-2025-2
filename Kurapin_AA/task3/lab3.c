@@ -6,6 +6,7 @@
 
 int main()
 {
+	system("chcp 1251");
 	setlocale(LC_ALL, "Rus");
 	srand(time(NULL));
 
