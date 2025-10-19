@@ -4,7 +4,7 @@
 
 int main() {
     setlocale(LC_ALL, "Ru");
-    double DENSITY_DVP = 800, d;
+    double DENSITY_DVP = 800;
     double DENSITY_DSP = 650;
     double DENSITY_WOOD = 600;  
     double height, width, depth;
@@ -54,8 +54,5 @@ int main() {
     printf("- Двери: %.2f кг\n", door_mass);
     printf("- Полки (%d шт): %.2f кг\n", shelf_count, shelf_mass);
 
-    scanf_s("%lf", &d);
-
     return 0;
-
 }
