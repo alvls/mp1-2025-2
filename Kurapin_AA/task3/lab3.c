@@ -1,4 +1,4 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <math.h>
 #include <locale.h>
 #include <stdlib.h>
@@ -6,13 +6,12 @@
 
 int main()
 {
-	system("chcp 1251");
 	setlocale(LC_ALL, "Rus");
 	srand(time(NULL));
 
 	while (1) {
 		int length;
-		printf("Введите длину числа\n");
+		printf("Р’РІРµРґРёС‚Рµ РґР»РёРЅСѓ С‡РёСЃР»Р°\n");
 		scanf_s("%i", &length);
 
 		int secret[5];
@@ -32,7 +31,7 @@ int main()
 			used[digit] = true;
 		}
 
-		printf("Сгенерировано\n");
+		printf("РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ\n");
 		int user_attempt;
 
 		while (1) {
@@ -53,11 +52,11 @@ int main()
 			}
 
 			if (fulls == length) {
-				printf("Совершенно верно! Угадано!\n");
+				printf("РЎРѕРІРµСЂС€РµРЅРЅРѕ РІРµСЂРЅРѕ! РЈРіР°РґР°РЅРѕ!\n");
 				break;
 			}
 
-			printf("Коров: %i, Быков: %i\n", halves, fulls);
+			printf("РљРѕСЂРѕРІ: %i, Р‘С‹РєРѕРІ: %i\n", halves, fulls);
 		}
 	}
 

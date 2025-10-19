@@ -1,17 +1,16 @@
-#include <stdio.h>
+Ôªø#include <stdio.h>
 #include <math.h>
 #include <locale.h>
 #include <stdlib.h>
 
 int main()
 {
-	system("chcp 1251");
 	setlocale(LC_ALL, "Rus");
 	srand(time(NULL));
 
 	while (1) {
 		int mode;
-		printf("–ÂÊËÏ 1 ËÎË 2?\n");
+		printf("–†–µ–∂–∏–º 1 –∏–ª–∏ 2?\n");
 		scanf_s("%i", &mode);
 
 		if (mode == 1) {
@@ -45,7 +44,7 @@ int main()
 				scanf_s(" %c", &user_hint, 1);
 
 				if (user_hint == '=') {
-					printf("”–¿!!!\n");
+					printf("–£–†–ê!!!\n");
 					break;
 				}
 				else if (user_hint == '<')

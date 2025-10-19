@@ -1,19 +1,18 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <math.h>
 #include <locale.h>
 
 int main()
 {
-    system("chcp 1251");
 	setlocale(LC_ALL, "Rus");
 
     double height, width, depth;
     double chipboard_density, fiberboard_density, wood_density;
 
-    printf("Введите высоту, ширину, глубину: ");
+    printf("Р’РІРµРґРёС‚Рµ РІС‹СЃРѕС‚Сѓ, С€РёСЂРёРЅСѓ, РіР»СѓР±РёРЅСѓ: ");
     scanf_s("%lf %lf %lf", &height, &width, &depth);
 
-    printf("Введите плотности ДСП, ДВП, дерева: ");
+    printf("Р’РІРµРґРёС‚Рµ РїР»РѕС‚РЅРѕСЃС‚Рё Р”РЎРџ, Р”Р’Рџ, РґРµСЂРµРІР°: ");
     scanf_s("%lf %lf %lf", &chipboard_density, &fiberboard_density, &wood_density);
 
     height /= 100;
@@ -30,7 +29,7 @@ int main()
     
     double wardrobe_mass = backdoor_mass + sidedoors_mass + ends_mass + doors_mass + shelves_mass;
 
-    printf("Масса шкафа: %lf", wardrobe_mass);
+    printf("РњР°СЃСЃР° С€РєР°С„Р°: %lf", wardrobe_mass);
 
     system("pause");
 
