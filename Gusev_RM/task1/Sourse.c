@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <locale.h>
 void main() {
-	float h, w, d, t1, t2, ves;
 	setlocale(LC_ALL, "Russian");
+	float h, w, d, t1, t2, ves;
 	printf("введите высоту (180-220 см), ширину (80-120) см, глубину (50-90) см\n");
 	scanf_s("%f %f %f", &h, &w, &d);
 	const Pdsp = 750;

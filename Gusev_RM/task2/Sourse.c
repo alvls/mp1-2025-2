@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include <time.h>
 int main(){
+	setlocale(LC_ALL, "Russian");
 	srand(time(0));
-	setlocale(LC_ALL, "Russian");;
 	int reg, N=1000, ot=0;
 	printf("Введите режим игры 1 или 2\n");
 	scanf_s("%i", &reg);
 	if (reg==1) {
-		int n = rand() % (N+1), variant, popytki1=0;
+		int n = rand() % (N+1), variant, popytki1=1;
 		while (ot == 0) {
 			printf("Введите ваш вариант ответа\n");
 			scanf_s("%i", &variant);
@@ -31,7 +31,7 @@ int main(){
 	if (reg == 2) {
 		printf("придумайте число, а я его отгадаю\n");
 		printf("я буду печатать числа а вы отвечайте > - больше, < - меньше или = если число верно\n");
-		int ot2 = 0, min = 0, max = 1000, varkomp=0, poytki2=0;
+		int ot2 = 0, min = 0, max = 1000, varkomp=0, poytki2=1;
 		char chelot='-';
 		while (ot2 == 0) {
 			varkomp = (min + max) / 2 ;
