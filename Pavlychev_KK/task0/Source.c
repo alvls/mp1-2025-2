@@ -1,13 +1,13 @@
-#include "stdio.h"
-#include "math.h"
-#include "stdlib.h"
+#include <stdio.h>
+#include <math.h>
+
 int main() {
     double r1, r2, x1, y1, x2, y2, d;
     printf("napishite: x1 y1 r1 x2 y2 r2.(cherez probel and bez tochki)");
     scanf_s("%lf %lf %lf %lf %lf %lf", &x1, &y1, &r1, &x2, &y2, &r2);
     double sum = r1 + r2;
     double raz = abs(r1 - r2);
-    d = pow((pow(abs(x1 - x2), 2) + pow(abs(y1 - y2), 2)), 0.5);
+    d = pow((pow((x1 - x2), 2) + pow((y1 - y2), 2)), 0.5);
     if (d <= 0 && r1 == r2) {
         printf("okr sovpadaut"); // окр совпадают.
         return 0;
