@@ -19,8 +19,8 @@ int main() {
     printf("napishite dliny zagadivaemogo chisla(2<=n<=5):");
     scanf_s("%i", &n);
     srand(time(NULL));
-    int deg[n];
-    int m[n];
+    int deg[5];
+    int m[5];
     m[0] = rand() % 9 + 1;
     for (int i = 1; i < n; i++) {
         do {
@@ -33,8 +33,8 @@ int main() {
     while (0 == 0) {
         cnt_k = 0;
         cnt_b = 0;
-        int korovi[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        int biki[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        //int korovi[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        //int biki[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         printf("poprpbyite otgatati chislo:");
         scanf_s("%i", &degit);
         for (int i = 0; i < n; i++) {
@@ -45,12 +45,10 @@ int main() {
             for (int j = 0; j < n; j++) {
                 if (i == j && m[i] == deg[j]) {
                     cnt_b++;
-                    biki[deg[j]]++;
                     break;
                 }
                 if (m[i] == deg[j]) {
                     cnt_k++;
-                    korovi[deg[j]]++;
                     break;
                 }
             }
@@ -59,31 +57,17 @@ int main() {
             printf("korov net. ");
         }
         else {
-            printf("vsego ");
+            printf("korov = ");
             printf("%i ", cnt_k);
-            printf("korov: ");
-            for (int i = 0; i < 10; i++) {
-                if (korovi[i] == 1) {
-                    printf("%i, ", i);
-                }
-            }
-            printf(".");
         }
         printf("\n");
         if (cnt_b == 0) {
             printf("bikov net.\n");
         }
         else {
-            printf("vsego ");
+            printf("bikov = ");
             printf("%i ", cnt_b);
-            printf("bikov: ");
-            for (int i = 0; i < 10; i++) {
-                if (biki[i] == 1) {
-                    printf("%i, ", i);
-                }
-            }
         }
-        printf(".");
         printf("\n");
         if (cnt_b == n) {
             break;
