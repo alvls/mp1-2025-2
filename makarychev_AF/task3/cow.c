@@ -2,7 +2,6 @@
 #include <locale.h>
 #include <stdlib.h>
 #include <time.h>
-
 void main()
 {
 	char* locale = setlocale(LC_ALL, "");
