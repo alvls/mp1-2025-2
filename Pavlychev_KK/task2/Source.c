@@ -2,15 +2,16 @@
 #include <math.h>
 #include <stdlib.h>
 int main() {
-    int flage = 0, max, min, cnt, tr, mid;
+    int flage = 0, max, min, cnt=0, tr, mid;
     printf("vibirite reshim(1 or 2).napishite nomer reshima:\n");
+    printf("f 1 reshime vi otgadivaete chislo, a vo 2 naobarot");
     scanf_s("%i", &flage);
     min = 1;
     max = 999;
     if (flage == 1) {
         int random_n = rand() % (max - 1) + 1;
-        printf("%i", random_n);
-        system("pause");
+        //printf("%i", random_n);
+        //system("pause");
         printf("ygadaite chislo\n");
         while (1 == 1) {
             scanf_s("%i", &tr);
@@ -34,27 +35,27 @@ int main() {
     else if (flage == 2) {
         printf("zagadaite 1 <= chislo < 1000\n");
         printf("500?\n");
-        printf("napishi dogatky(<, >, =):\n");
+        printf("napishi dogatky(eto chislo: < or > or =. v sravnenii s vashim chislom):\n");
         mid = 500;
         char rez;
         while (0 == 0) {
-            scanf_s("%c", &rez);
+            scanf_s("%c", &rez, 1);
             switch (rez) {
-            case 60:
+            case '<':
                 min = mid;
                 mid = (min + max) / 2;
                 printf("%i", mid);
                 printf("?\n");
                 cnt++;
                 break;
-            case 62:
+            case '>':
                 max = mid;
                 mid = (min + max) / 2;
                 printf("%i", mid);
                 printf("?\n");
                 cnt++;
                 break;
-            case 61:
+            case '=':
                 printf("YRAA!\n");
                 printf("chislo popitok:");
                 cnt++;
