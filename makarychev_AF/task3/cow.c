@@ -8,14 +8,14 @@ void main()
 	srand(time(NULL));
 	int  num[5], num_choise[11] = { 0,1,2,3,4,5,6,7,8,9 }, num_guess[5];
 	int len, i, a = rand() % 10, flag = 1, cow, bull, j;
-	printf("Введите длину числа: ");
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ Г¤Г«ГЁГ­Гі Г·ГЁГ±Г«Г : ");
 	scanf_s("%d", &len);
 	for (i=0; i <= len - 1; i++)
 	{
 		while ((num[i]>10)||(num[i]<0))
 		{
-			if 
-				(i==0) a=1+ rand() % 10;
+			if (i==0) 
+				a=1+ rand() % 10;
 			else 
 				a = rand() % 10;
 			num[i] = num_choise[a];
@@ -28,7 +28,7 @@ void main()
 		bull = 0;
 		for (i = 0; i <= len - 1; i++)
 		{
-			printf("Какая цифра стоит на позиции %d: ", i+1);
+			printf("ГЉГ ГЄГ Гї Г¶ГЁГґГ°Г  Г±ГІГ®ГЁГІ Г­Г  ГЇГ®Г§ГЁГ¶ГЁГЁ %d: ", i+1);
 			scanf_s("%d", &num_guess[i]);
 			if 
 				(num_guess[i] == num[i]) bull++;
@@ -39,12 +39,12 @@ void main()
 		}
 		if (bull == len)
 		{ 
-			printf("Вы угадали число: "); 
+			printf("Г‚Г» ГіГЈГ Г¤Г Г«ГЁ Г·ГЁГ±Г«Г®: "); 
 			for (j = 0; j <= len - 1; j++) 
 				printf("%d", num[j]);
 			flag = 0;
 		}
 		else 
-			printf("Количество коров: %d\nКоличество быков: %d\n", cow, bull);
+			printf("ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЄГ®Г°Г®Гў: %d\nГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЎГ»ГЄГ®Гў: %d\n", cow, bull);
 	}	
 }
