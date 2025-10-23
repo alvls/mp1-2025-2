@@ -33,12 +33,15 @@ void main()
 			if 
 				(num_guess[i] == num[i]) bull++;
 			else 
-				for (j = 0; j <= len - 1; j++) if (num_guess[i] == num[j]) cow++;
+				for (j = 0; j <= len - 1; j++) 
+					if (num_guess[i] == num[j]) 
+						cow++;
 		}
 		if (bull == len)
 		{ 
 			printf("Вы угадали число: "); 
-			for (j = 0; j <= len - 1; j++) printf("%d", num[j]);
+			for (j = 0; j <= len - 1; j++) 
+				printf("%d", num[j]);
 			flag = 0;
 		}
 		else 
