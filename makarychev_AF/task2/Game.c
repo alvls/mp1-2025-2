@@ -10,15 +10,15 @@ void main()
 	char cha;
 	do
 	{
-	count = 0;
-	printf("Выберите режим игры\n0 выйти из игры\n1 Вы угадываете\n2 Вы загадываете\nВаш выбор:");
-	scanf_s("%i", &num);
-	switch (num)
+		count = 0;
+		printf("Выберите режим игры\n0 выйти из игры\n1 Вы угадываете\n2 Вы загадываете\nВаш выбор:");
+		scanf_s("%i", &num);
+		switch (num)
 		{
 			case 0:
 			{
-			printf("Спасибо за игру!");
-			break;
+				printf("Спасибо за игру!");
+				break;
 			}
 			case 1:
 			{
@@ -33,7 +33,6 @@ void main()
 					else
 						if (otg > zag)
 							printf("Загаданное число меньше\n");
-
 				}
 				printf("Вы отгадали!Использованно попыток: %d\n",count);
 				break;
@@ -56,12 +55,11 @@ void main()
 						scanf_s(" %c", &cha, 1);
 						switch (cha)
 						{
-						case '<':b = otg;break;
-						case '>':a = otg;break;
-						case '=':
-							printf("Я отгадал число! У меня получилось за %d попыток\n", count);
-							break;
-
+							case '<':b = otg;break;
+							case '>':a = otg;break;
+							case '=':
+								printf("Я отгадал число! У меня получилось за %d попыток\n", count);
+								break;
 						}
 
 					} while (cha != '=');
@@ -72,15 +70,14 @@ void main()
 						otg = ((a - b) / 2) - ((a - b) % 2) + b;
 						count++;
 						printf("Моё предположение: %d\nОно больше?Меньше?Верно?", otg);
-						scanf_s(" %c", &cha, 1);
+						scanf_s(" %с", &cha, 1);
 						switch (cha)
 						{
-						case '<':b = otg;break;
-						case '>':a = otg;break;
-						case '=':
-							printf("Я отгадал число! У меня получилось за %d попыток\n", count);
-							break;
-
+							case '<':b = otg;break;
+							case '>':a = otg;break;
+							case '=':
+								printf("Я отгадал число! У меня получилось за %d попыток\n", count);
+								break;
 						}
 
 					} while (cha != '=');
@@ -89,5 +86,4 @@ void main()
 			}
 		}
 	} while ( num != 0);
-
 }
