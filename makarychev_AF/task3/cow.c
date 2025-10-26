@@ -14,8 +14,8 @@ void main()
 	{
 		while ((num[i]>10)||(num[i]<0))
 		{
-			if 
-				(i==0) a=1+ rand() % 10;
+			if (i==0) 
+				a=1+ rand() % 10;
 			else 
 				a = rand() % 10;
 			num[i] = num_choise[a];
