@@ -33,8 +33,8 @@ void main()
             if(num_guess[i] == num[i]) 
                 bull++;
             else
-                for (j = 0; j <= len - 2; j++)
-                    if (num_guess[i] == num[j+1])
+                for (j = 0; j <= len - 1; j++)
+                    if (num_guess[i] == num[j])
                         cow++;
         }
         if (bull == len)
