@@ -19,7 +19,7 @@ void main() {
 	zdst = h * w * 5 * 0.1 * 0.01 * Pdvp;
 	bok = h * d * 15 * 0.1 * 0.01 * Pdsp * 2;
 	krshk = w * d * 15 * 0.1 * 0.01 * Pdsp * 2;
-	dveri = h * w * 1 * 0.01 * Pderev * 2;
+	dveri = h * w * 0.01 * Pderev * 2;
 	vnpol = (w-30*0.1*0.01) * (d-5*0.1*0.01) *15 * 0.1 * 0.01 * Pdsp * n;
 	ves = zdst + bok + krshk + dveri + vnpol;
 	printf("%f\n",ves);
