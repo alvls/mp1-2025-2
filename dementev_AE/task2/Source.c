@@ -31,11 +31,11 @@ void Mode1() {
 	printf("Enter a number from 1 to 999 \n");
 	while (1) {
 		scanf_s("%d", &numb);
-		if (numb < number) {
+		if (numb > number) {
 			printf("The hidden number is smaller than yours \n");
 			count++;
 		}
-		else if (numb > number) {
+		else if (numb < number) {
 			printf("The hidden number is bigger than yours \n");
 			count++;
 		}
