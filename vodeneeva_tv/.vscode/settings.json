@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "bitset": "c",
+        "unordered_map": "c"
+    }
+}
