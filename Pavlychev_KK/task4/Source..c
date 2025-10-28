@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <locale.h>
-
 int main() {
     setlocale(LC_ALL, "Russian");
     char producty[3][7] = {"Хлеб", "Молоко", "Масло"};
