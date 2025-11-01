@@ -31,13 +31,13 @@ int main()
 	else if (distance < abs(R1 - R2)) {
 		printf("Окружность %i полностью находится внутри окружности %i, они не касаются\n", minC, maxC);
 	}
-	else if (distance = R1 + R2) {
+	else if (distance == R1 + R2) {
 		printf("Окружности касаются внешне\n");
 	}
 	else if (distance == abs(R1 - R2) && distance != 0) {
 		printf("Окружность %i находится внутри окружности %i, они касаются внутренне\n", minC, maxC);
 	}
-	else if (abs(R1 - R2) < distance < R1 + R2) {
+	else if (abs(R1 - R2) < distance && distance < R1 + R2) {
 		printf("Окружности пересекаются в двух точках\n");
 	}
 	else if (distance == 0 && R1 == R2) {
