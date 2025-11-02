@@ -10,7 +10,7 @@ void main()
     int n, a, b = 0, c = 0, d = 0, p = 1000;
     printf("¬ведите длину числа(от 2 до 5) ");
     scanf_s(" %i", &n);
-    float arr1[5] = { 0 };
+    float arr1[5] = { 1000 };
     arr1[n - 1] = 1 + rand() % (10 - 1);
     while (p != 0)
     {
@@ -28,7 +28,7 @@ void main()
         d = 0;
         printf("¬ведите число \n");
         scanf_s("%d", &b);
-        float arr2[5] = { 0 };
+        float arr2[5] = { 1000 };
         for (int i = 0; i < n; i++)
         {
             arr2[i] = b % 10;
