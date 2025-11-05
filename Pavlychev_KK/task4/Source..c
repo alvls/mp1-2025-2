@@ -1,8 +1,8 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <locale.h>
 int main() {
-    setlocale(LC_ALL, "Russian");
-    char producty[3][7] = {"Хлеб", "Молоко", "Масло"};
+    setlocale(LC_ALL, "Ru_ru.UTF8");
+    char producty[3][7] = {"РҐР»РµР±", "РњРѕР»РѕРєРѕ", "РњР°СЃР»Рѕ"};
     int shtrih[3][4] = { {1,2,3,4},{4,3,2,1},{5,6,7,8} };
     float scidka[3] = { 15, 10, 5 };
     float cena[3] = { 70, 95, 150 };
@@ -13,13 +13,13 @@ int main() {
     float sum = 0;
     float sum_scidka = 0.0;
     float procent = 0.0;
-    printf("Штрих-код: 1111 зарезервирован под завершение сканирования.\n");
+    printf("РЁС‚СЂРёС…-РєРѕРґ: 1111 Р·Р°СЂРµР·РµСЂРІРёСЂРѕРІР°РЅ РїРѕРґ Р·Р°РІРµСЂС€РµРЅРёРµ СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ.\n");
     while (1) {
         c = 0;
         for (int i = 0; i < 4; i++) {
-            kod[i] = 0;   //Обнуление - kod = {0,0,0,0}
+            kod[i] = 0;   //РћР±РЅСѓР»РµРЅРёРµ - kod[4] = {0,0,0,0}
         }
-        printf("Введите штрих-код(Цифры через пробел):");
+        printf("Р’РІРµРґРёС‚Рµ С€С‚СЂРёС…-РєРѕРґ(Р¦РёС„СЂС‹ С‡РµСЂРµР· РїСЂРѕР±РµР»):");
         for (int i = 0; i < 4; i++) {
             scanf_s("%i", &kod[i]);
             if (kod[i] == 1) {
@@ -27,7 +27,7 @@ int main() {
             }
         }
         if (c == 4) {
-            printf("Сканирование законченно.\n\n");
+            printf("РЎРєР°РЅРёСЂРѕРІР°РЅРёРµ Р·Р°РєРѕРЅС‡РµРЅРЅРѕ.\n\n");
             break;
         }
         printf("\n");
@@ -42,19 +42,19 @@ int main() {
                 }
             }
             if (cnt == 4) {
-                printf("Описание товара:\n");
-                printf("Штрих-код = ");
+                printf("РћРїРёСЃР°РЅРёРµ С‚РѕРІР°СЂР°:\n");
+                printf("РЁС‚СЂРёС…-РєРѕРґ = ");
                 for (int i = 0; i < 4; i++) {
                     printf("%i", kod[i]);
                 }
-                printf("\nНаименование = %s\n", producty[i]);
-                printf("Cтоимостью за единицу товара = %.0f рублей\n", cena[i]);
-                printf("Скидка на товар = %.0f процентов\n\n", scidka[i]);
+                printf("\nРќР°РёРјРµРЅРѕРІР°РЅРёРµ = %s\n", producty[i]);
+                printf("CС‚РѕРёРјРѕСЃС‚СЊСЋ Р·Р° РµРґРёРЅРёС†Сѓ С‚РѕРІР°СЂР° = %.0f СЂСѓР±Р»РµР№\n", cena[i]);
+                printf("РЎРєРёРґРєР° РЅР° С‚РѕРІР°СЂ = %.0f РїСЂРѕС†РµРЅС‚РѕРІ\n\n", scidka[i]);
                 count[i]++;
             }
         }
     }
-    printf("Чек:\n");
+    printf("Р§РµРє:\n");
     for (int i = 0; i < 3; i++) {
         if (count[i] != 0) {
             printf("%s-%.0f-%i-%.0f\n", producty[i], cena[i], count[i], cena[i] * count[i]);
@@ -63,9 +63,9 @@ int main() {
             sum_scidka += ((cena[i] * count[i]) * procent);
         }
     }
-    printf("Общая цена без скидки = %.0f рублей\n", sum);
-    printf("Cуммарная скидка = %.0f рублей\n", sum_scidka);
-    printf("Итоговая сумма к оплате = %.0f рублей.", sum - sum_scidka);
+    printf("РћР±С‰Р°СЏ С†РµРЅР° Р±РµР· СЃРєРёРґРєРё = %.0f СЂСѓР±Р»РµР№\n", sum);
+    printf("CСѓРјРјР°СЂРЅР°СЏ СЃРєРёРґРєР° = %.0f СЂСѓР±Р»РµР№\n", sum_scidka);
+    printf("РС‚РѕРіРѕРІР°СЏ СЃСѓРјРјР° Рє РѕРїР»Р°С‚Рµ = %.0f СЂСѓР±Р»РµР№.", sum - sum_scidka);
     system("pause");
     return 0;
 }
