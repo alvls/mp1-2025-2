@@ -1,4 +1,4 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <math.h>
 #include <locale.h>
 #include <stdlib.h>
@@ -35,10 +35,10 @@ int main()
 	setlocale(LC_ALL, "Rus");
 
 	struct Product products[] = {
-		{{0, 0, 0, 0}, "Сырок творожный", 50.0f, 5},
-		{{0, 0, 0, 1}, "Йогурт", 70.0f, 10},
-		{{0, 0, 0, 2}, "Ряженка", 60.0f, 5},
-		{{0, 0, 0, 3}, "Сигареты", 200.0f, 0},
+		{{0, 0, 0, 0}, "РЎС‹СЂРѕРє С‚РІРѕСЂРѕР¶РЅС‹Р№", 50.0f, 5},
+		{{0, 0, 0, 1}, "Р™РѕРіСѓСЂС‚", 70.0f, 10},
+		{{0, 0, 0, 2}, "Р СЏР¶РµРЅРєР°", 60.0f, 5},
+		{{0, 0, 0, 3}, "РЎРёРіР°СЂРµС‚С‹", 200.0f, 0},
 	};
 	int products_count = sizeof(products) / sizeof(products[0]);
 
@@ -50,22 +50,22 @@ int main()
 
 	int barcode[4] = {-1, 0, 0, 0};
 	char input[5];
-	printf("Опции:\n - Ввести штрихкод (0000 - 0003)\n - Ввести 0, чтобы получить информацию о последнем штрихкоде \n - Ввести 1, чтобы добавить последний штрихкод в корзину\n - Ввести 2, чтобы получить текущую итоговую сумму товаров из корзины\n - Ввести 3, чтобы получить чек\n");
+	printf("РћРїС†РёРё:\n - Р’РІРµСЃС‚Рё С€С‚СЂРёС…РєРѕРґ (0000 - 0003)\n - Р’РІРµСЃС‚Рё 0, С‡С‚РѕР±С‹ РїРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїРѕСЃР»РµРґРЅРµРј С€С‚СЂРёС…РєРѕРґРµ \n - Р’РІРµСЃС‚Рё 1, С‡С‚РѕР±С‹ РґРѕР±Р°РІРёС‚СЊ РїРѕСЃР»РµРґРЅРёР№ С€С‚СЂРёС…РєРѕРґ РІ РєРѕСЂР·РёРЅСѓ\n - Р’РІРµСЃС‚Рё 2, С‡С‚РѕР±С‹ РїРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰СѓСЋ РёС‚РѕРіРѕРІСѓСЋ СЃСѓРјРјСѓ С‚РѕРІР°СЂРѕРІ РёР· РєРѕСЂР·РёРЅС‹\n - Р’РІРµСЃС‚Рё 3, С‡С‚РѕР±С‹ РїРѕР»СѓС‡РёС‚СЊ С‡РµРє\n");
 
 	while (1) {
 		scanf_s("%4s", input, (unsigned)_countof(input));
 
 		if (strlen(input) == 1) {
 			if (barcode[0] == -1) {
-				printf("Вы ничего не просканировали\n");
+				printf("Р’С‹ РЅРёС‡РµРіРѕ РЅРµ РїСЂРѕСЃРєР°РЅРёСЂРѕРІР°Р»Рё\n");
 				continue;
 			}
 			else if (input[0] == '0') {
 				struct Product* product = FindProductByBarcode(products, products_count, barcode);
 
 				if (product != NULL) {
-					printf("Штрихкод: %d%d%d%d\n", product->barcode[0], product->barcode[1], product->barcode[2], product->barcode[3]);
-					printf("Название: %s\nЦена: %f рублей\nПроцент скидки: %d\n", product->name, product->price, product->discount);
+					printf("РЁС‚СЂРёС…РєРѕРґ: %d%d%d%d\n", product->barcode[0], product->barcode[1], product->barcode[2], product->barcode[3]);
+					printf("РќР°Р·РІР°РЅРёРµ: %s\nР¦РµРЅР°: %f СЂСѓР±Р»РµР№\nРџСЂРѕС†РµРЅС‚ СЃРєРёРґРєРё: %d\n", product->name, product->price, product->discount);
 				}
 			}
 			else if (input[0] == '1') {
@@ -75,7 +75,7 @@ int main()
 					for (int i = 0; i < products_count; i++) {
 						if (items[i].product == product) {
 							items[i].count++;
-							printf("%d %s в корзине\n", items[i].count, product->name);
+							printf("%d %s РІ РєРѕСЂР·РёРЅРµ\n", items[i].count, product->name);
 						}
 					}
 				}
@@ -87,7 +87,7 @@ int main()
 					total_sum_discounted += (items[i].product->price * (1 - 0.01 * items[i].product->discount) * items[i].count);
 				}
 
-				printf("Общая стоимость товаров в чеке: %f рублей\n", total_sum_discounted);
+				printf("РћР±С‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ С‚РѕРІР°СЂРѕРІ РІ С‡РµРєРµ: %f СЂСѓР±Р»РµР№\n", total_sum_discounted);
 			}
 			else if (input[0] == '3') {
 				float total_sum = 0;
@@ -103,15 +103,15 @@ int main()
 
 				float total_discount = (total_sum - total_sum_discounted) / total_sum * 100;
 
-				printf("Чек:\n\n");
+				printf("Р§РµРє:\n\n");
 
 				for (int i = 0; i < products_count; i++) {
 					if (items[i].count > 0) {
-						printf("Название: %s\nЦена: %f рублей\nПроцент скидки: %d\nКоличество: %d\nИтоговая стоимость: %f рублей\n\n", items[i].product->name, items[i].product->price, items[i].product->discount, items[i].count, items[i].product->price * (1 - 0.01 * items[i].product->discount) * items[i].count);
+						printf("РќР°Р·РІР°РЅРёРµ: %s\nР¦РµРЅР°: %f СЂСѓР±Р»РµР№\nРџСЂРѕС†РµРЅС‚ СЃРєРёРґРєРё: %d\nРљРѕР»РёС‡РµСЃС‚РІРѕ: %d\nРС‚РѕРіРѕРІР°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ: %f СЂСѓР±Р»РµР№\n\n", items[i].product->name, items[i].product->price, items[i].product->discount, items[i].count, items[i].product->price * (1 - 0.01 * items[i].product->discount) * items[i].count);
 					}
 				}
 
-				printf("Общая стоимость товаров (без скидки): %f рублей\nСуммарная скидка: %f\nИтоговая стоимость к оплате: %f рублей\n\n", total_sum, total_discount, total_sum_discounted);
+				printf("РћР±С‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ С‚РѕРІР°СЂРѕРІ (Р±РµР· СЃРєРёРґРєРё): %f СЂСѓР±Р»РµР№\nРЎСѓРјРјР°СЂРЅР°СЏ СЃРєРёРґРєР°: %f\nРС‚РѕРіРѕРІР°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ Рє РѕРїР»Р°С‚Рµ: %f СЂСѓР±Р»РµР№\n\n", total_sum, total_discount, total_sum_discounted);
 			}
 		}
 		else if (strlen(input) == 4) {
@@ -138,10 +138,10 @@ int main()
 	return 0;
 }
 
-//int** barcodes = NULL; это я не то сделал
+//int** barcodes = NULL; СЌС‚Рѕ СЏ РЅРµ С‚Рѕ СЃРґРµР»Р°Р»
 //char input[5];
 //int size = 0;
-//printf("Вводите штрихкоды (0000 - 0003). Введите 0 чтобы закончить ввод.\n");
+//printf("Р’РІРѕРґРёС‚Рµ С€С‚СЂРёС…РєРѕРґС‹ (0000 - 0003). Р’РІРµРґРёС‚Рµ 0 С‡С‚РѕР±С‹ Р·Р°РєРѕРЅС‡РёС‚СЊ РІРІРѕРґ.\n");
 //
 //while (1) {
 //	scanf_s("%4s", input);
