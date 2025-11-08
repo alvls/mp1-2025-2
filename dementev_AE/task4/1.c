@@ -1,8 +1,8 @@
-#include "stdio.h"
+п»ї#include "stdio.h"
 #include "locale.h"
 
-int barcode[2] = { 1234, 5678 }; // 1234 молоко 5678 хлеб
-char name[2][10] = { "молоко", "хлеб" };
+int barcode[2] = { 1234, 5678 }; // 1234 РјРѕР»РѕРєРѕ 5678 С…Р»РµР±
+char name[2][10] = { "РјРѕР»РѕРєРѕ", "С…Р»РµР±" };
 int price[2] = { 90, 40 };
 int discount[2] = { 10, 25 };
 int quantity[2] = { 0, 0 };
@@ -17,7 +17,7 @@ void com2();
 void com3();
 
 int main() {
-	setlocale(LC_ALL, "Ru");
+	setlocale(LC_ALL, "Ru_ru.UTF8");
 	do {
 		com();
 		switch (a) {
@@ -34,18 +34,18 @@ int main() {
 }
 
 void com() {
-	printf("1. Ввести штрихкод\n");
-	printf("2. Вывести описание товара про штрихкоду\n");
-	printf("3. Завершить сканирование/вывести чек\n");
+	printf("1. Р’РІРµСЃС‚Рё С€С‚СЂРёС…РєРѕРґ\n");
+	printf("2. Р’С‹РІРµСЃС‚Рё РѕРїРёСЃР°РЅРёРµ С‚РѕРІР°СЂР° РїСЂРѕ С€С‚СЂРёС…РєРѕРґСѓ\n");
+	printf("3. Р—Р°РІРµСЂС€РёС‚СЊ СЃРєР°РЅРёСЂРѕРІР°РЅРёРµ/РІС‹РІРµСЃС‚Рё С‡РµРє\n");
 	scanf_s("%d", &a);
 }
 
 void com1() {
-	printf("Введите штрихкод: ");
+	printf("Р’РІРµРґРёС‚Рµ С€С‚СЂРёС…РєРѕРґ: ");
 	scanf_s("%d", &barus);
 	for (int i = 0; i < 3; i++) {
 		if (barcode[i] == barus) {
-			printf("Товаp: %s добавлен в чек. \n", name[i]);
+			printf("РўРѕРІР°p: %s РґРѕР±Р°РІР»РµРЅ РІ С‡РµРє. \n", name[i]);
 			quantity[i]++;
 			break;
 		}
@@ -54,17 +54,17 @@ void com1() {
 }
 
 void com2() {
-	printf("Введите штрихкод: \n");
+	printf("Р’РІРµРґРёС‚Рµ С€С‚СЂРёС…РєРѕРґ: \n");
 	scanf_s("%d", &barus);
 	for (int i = 0; i < 3; i++) {
 		if (barcode[i] == barus) {
-			printf("Наименование: %s\n", name[i]);
-			printf("Цена: %d \n", price[i]);
-			printf("Скидка: %d \n", discount[i]);
+			printf("РќР°РёРјРµРЅРѕРІР°РЅРёРµ: %s\n", name[i]);
+			printf("Р¦РµРЅР°: %d \n", price[i]);
+			printf("РЎРєРёРґРєР°: %d \n", discount[i]);
 			break;
 		}
 		else {
-			printf("Ошибка: Штрихкод не найден в базе \n");
+			printf("РћС€РёР±РєР°: РЁС‚СЂРёС…РєРѕРґ РЅРµ РЅР°Р№РґРµРЅ РІ Р±Р°Р·Рµ \n");
 			break;
 		}
 	}
@@ -72,8 +72,8 @@ void com2() {
 
 void com3() {
 	int res = 0;
-	printf("\n=== ЧЕК ===\n");
-	printf("%-20s %-10s %-10s %-10s %-10s\n", "Наименование", "Цена", "Кол-во", "Скидка", "Сумма");
+	printf("\n=== Р§Р•Рљ ===\n");
+	printf("%-20s %-10s %-10s %-10s %-10s\n", "РќР°РёРјРµРЅРѕРІР°РЅРёРµ", "Р¦РµРЅР°", "РљРѕР»-РІРѕ", "РЎРєРёРґРєР°", "РЎСѓРјРјР°");
 	for (int i = 0; i < 2; i++) {
 		if (quantity[i] != 0) {
 			int a = price[i] * quantity[i];
@@ -87,5 +87,5 @@ void com3() {
 	for (int i = 0; i < 2; i++)
 		res += quan[i];
 	printf("----------------\n");
-	printf("Итоговая сумма: %d", res);
+	printf("РС‚РѕРіРѕРІР°СЏ СЃСѓРјРјР°: %d", res);
 }
