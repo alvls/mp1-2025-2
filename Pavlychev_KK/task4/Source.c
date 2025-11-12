@@ -1,8 +1,9 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <locale.h>
 int main() {
     setlocale(LC_ALL, "Ru_ru.UTF8");
-    char producty[3][7] = {"Хлеб", "Молоко", "Масло"};
+    printf("Штрих-код: 1111 зарезервирован под завершение сканирования.\n");
+    char producty[3][7000] = {"хлеб", "молоко", "масло"};
     int shtrih[3][4] = { {1,2,3,4},{4,3,2,1},{5,6,7,8} };
     float scidka[3] = { 15, 10, 5 };
     float cena[3] = { 70, 95, 150 };
@@ -13,7 +14,6 @@ int main() {
     float sum = 0;
     float sum_scidka = 0.0;
     float procent = 0.0;
-    printf("Штрих-код: 1111 зарезервирован под завершение сканирования.\n");
     while (1) {
         c = 0;
         for (int i = 0; i < 4; i++) {
