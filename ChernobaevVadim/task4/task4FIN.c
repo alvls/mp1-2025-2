@@ -1,322 +1,146 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
+#include <locale.h>
 
-// Структура для товара
-struct Product {
-    char barcode[5];    // Штрих-код
-    char name[50];
-    int price;
-    int discount;       // шаг в 5%
-};
+#define MAX_ITEMS 100
+#define NUM_PRODUCTS 10
 
-// Структура для позиции в чеке
-struct ReceiptItem {
-    char name[50];
-    int unit_price;
-    int quantity;
-    int total_price;
-};
+// Массивы для хранения данных о товарах
+char barcodes[NUM_PRODUCTS][5] = { "1234", "2345", "3456", "4567", "5678",
+                                   "6789", "7890", "8901", "9012", "0123" }; // Штрих-коды товаров
+char names[NUM_PRODUCTS][50] = { "Кроциус", "Печать чистоты", "Силовая броня", "Силовой топор",
+                                "Запчасти для генератора поля Геллера", "Болтер",
+                                "Баки с прометием", "Набор аугметики", "Алая роба", "Сервочереп" }; // Наименования товаров
+int prices[NUM_PRODUCTS] = { 2500, 200, 5000, 1500, 10000, 3000, 350, 4000, 120, 500 }; // Цены товаров
+int discounts[NUM_PRODUCTS]; // Скидки товаров (случайные)
 
-// Структура для чека
-struct Receipt {
-    struct ReceiptItem items[100];  // Позиции в чеке
-    int item_count;                 // Количество позиций
-    int total_cost;
-    int total_discount;
-    int final_amount;
-};
+// Массивы для чека
+char receipt_barcodes[MAX_ITEMS][5]; // Штрих-коды товаров в чеке
+int receipt_quantities[MAX_ITEMS];    // Количество товаров в чеке
+int receipt_prices[MAX_ITEMS];        // Стоимость товара с учетом скидки в чеке
+int receipt_size = 0; // Количество товаров в чеке
 
-// Глобальные переменные
-struct Product products[] = {
-    {"0001", "Хлеб Бородинский", 45, 10},
-    {"0002", "Молоко 2.5%", 85, 5},
-    {"0003", "Сыр Российский", 320, 15},
-    {"0004", "Колбаса Докторская", 280, 20},
-    {"0005", "Яблоки красные", 120, 25},
-    {"0006", "Шоколад молочный", 65, 10},
-    {"0007", "Чай черный", 150, 30},
-    {"0008", "Кофе зерновой", 450, 35},
-    {"0009", "Сахар 1кг", 55, 5},
-    {"0010", "Масло сливочное", 180, 15}
-};
-
-int product_count = 10;
-struct Receipt current_receipt;
-char current_barcode[5] = "";
-
-// Функция для сканирования товара
-void scan_product() {
-    char input[10];
-
-    printf("Введите штрих-код (4 цифры): ");
-    scanf("%s", input);
-
-    // Проверка длины штрих-кода
-    if (strlen(input) != 4) {
-        printf("Ошибка: штрих-код должен содержать ровно 4 цифры!\n");
-        return;
-    }
-
-    // Проверка, что все символы - цифры
-    for (int i = 0; i < 4; i++) {
-        if (input[i] < '0' || input[i] > '9') {
-            printf("Ошибка: штрих-код должен содержать только цифры!\n");
-            return;
+// Функция для поиска товара по штрих-коду
+int find_product_by_barcode(const char* barcode) {
+    for (int i = 0; i < NUM_PRODUCTS; i++) {
+        if (strcmp(barcodes[i], barcode) == 0) {
+            return i;
         }
     }
-
-    strcpy(current_barcode, input);
-
-    // Поиск товара в базе
-    int found = 0;
-    for (int i = 0; i < product_count; i++) {
-        if (strcmp(products[i].barcode, current_barcode) == 0) {
-            found = 1;
-            printf("Товар отсканирован: %s\n", products[i].name);
-            break;
-        }
-    }
-
-    if (!found) {
-        printf("Товар с штрих-кодом %s не найден в базе!\n", current_barcode);
-        strcpy(current_barcode, "");
-    }
+    return -1;
 }
 
-// Функция для вывода описания отсканированного товара
-void show_product_description() {
-    if (strlen(current_barcode) == 0) {
-        printf("Сначала отсканируйте товар\n");
-        return;
-    }
-
-    for (int i = 0; i < product_count; i++) {
-        if (strcmp(products[i].barcode, current_barcode) == 0) {
-            struct Product p = products[i];
-            int price_with_discount = p.price - (p.price * p.discount / 100);
-
-            printf("\n=== Описание товара ===\n");
-            printf("Штрих-код: %s\n", p.barcode);
-            printf("Наименование: %s\n", p.name);
-            printf("Стоимость за единицу: %d руб.\n", p.price);
-            printf("Скидка: %d%%\n", p.discount);
-            printf("Цена со скидкой: %d руб.\n", price_with_discount);
-            printf("========================\n");
-            return;
-        }
-    }
-
-    printf("Товар не найден!\n");
+// Функция для расчета стоимости товара с учетом скидки
+int calculate_discounted_price(int price, int discount) {
+    return price - (price * discount) / 100;
 }
 
 // Функция для добавления товара в чек
-void add_to_receipt() {
-    if (strlen(current_barcode) == 0) {
-        printf("Сначала отсканируйте товар\n");
-        return;
-    }
-
-    // Поиск товара в базе
-    int product_index = -1;
-    for (int i = 0; i < product_count; i++) {
-        if (strcmp(products[i].barcode, current_barcode) == 0) {
-            product_index = i;
-            break;
-        }
-    }
-
-    if (product_index == -1) {
-        printf("Товар не найден в базе!\n");
-        return;
-    }
-
-    struct Product p = products[product_index];
-    int price_with_discount = p.price - (p.price * p.discount / 100);
-
-    // Проверка того, есть ли товар уже в чеке
-    for (int i = 0; i < current_receipt.item_count; i++) {
-        if (strcmp(current_receipt.items[i].name, p.name) == 0) {
-            // Увеличивание количество
-            current_receipt.items[i].quantity++;
-            current_receipt.items[i].total_price =
-                current_receipt.items[i].quantity * price_with_discount;
-            printf("Количество товара '%s' увеличено до %d\n",
-                p.name, current_receipt.items[i].quantity);
-            return;
-        }
-    }
-
-    // Добавление нового товара в чек
-    if (current_receipt.item_count < 100) {
-        struct ReceiptItem new_item;
-        strcpy(new_item.name, p.name);
-        new_item.unit_price = price_with_discount;
-        new_item.quantity = 1;
-        new_item.total_price = price_with_discount;
-
-        current_receipt.items[current_receipt.item_count] = new_item;
-        current_receipt.item_count++;
-
-        printf("Товар '%s' добавлен в чек\n", p.name);
+void add_to_receipt(int product_index, int quantity) {
+    if (receipt_size < MAX_ITEMS) {
+        strcpy_s(receipt_barcodes[receipt_size], sizeof(receipt_barcodes[0]), barcodes[product_index]);
+        receipt_quantities[receipt_size] = quantity;
+        receipt_prices[receipt_size] = calculate_discounted_price(prices[product_index], discounts[product_index]) * quantity;
+        receipt_size++;
     }
     else {
-        printf("Достигнуто максимальное количество позиций в чеке!\n");
+        printf("Пространство в чеке истощено! Повторите литанию запуска.\n");
     }
 }
 
-// Функция для расчета итоговой суммы
-void calculate_total() {
-    if (current_receipt.item_count == 0) {
-        printf("Чек пуст! Добавьте товары.\n");
-        return;
-    }
-
-    current_receipt.total_cost = 0;
-    current_receipt.total_discount = 0;
-    current_receipt.final_amount = 0;
-
-    // Расчет по каждой позиции в чеке
-    for (int i = 0; i < current_receipt.item_count; i++) {
-        // Находим оригинальную цену товара
-        int original_price = 0;
-        for (int j = 0; j < product_count; j++) {
-            if (strcmp(products[j].name, current_receipt.items[i].name) == 0) {
-                original_price = products[j].price;
-                break;
-            }
-        }
-
-        int cost_without_discount = original_price * current_receipt.items[i].quantity;
-        int discount_amount = cost_without_discount - current_receipt.items[i].total_price;
-
-        current_receipt.total_cost += cost_without_discount;
-        current_receipt.total_discount += discount_amount;
-        current_receipt.final_amount += current_receipt.items[i].total_price;
-    }
-
-    printf("Итоговая сумма рассчитана:\n");
-    printf("Общая стоимость: %d руб.\n", current_receipt.total_cost);
-    printf("Суммарная скидка: %d руб.\n", current_receipt.total_discount);
-    printf("Итого к оплате: %d руб.\n", current_receipt.final_amount);
-}
-
-// Функция для формирования чека
+// Функция для печати чека
 void print_receipt() {
-    if (current_receipt.item_count == 0) {
-        printf("Чек пуст! Сначала добавьте товары.\n");
-        return;
+    int total = 0;
+    int total_discount = 0;
+
+    printf("\n** Чек товаров **\n");
+    printf("------------------------------------------------\n");
+    for (int i = 0; i < receipt_size; i++) {
+        int product_index = find_product_by_barcode(receipt_barcodes[i]);
+        if (product_index != -1) {
+            int original_price = prices[product_index] * receipt_quantities[i];
+            int discount_amount = original_price - receipt_prices[i];
+            total += receipt_prices[i];
+            total_discount += discount_amount;
+
+            printf("%s - %d Юн. - %d ед. - %d Юн. (скидка %d%%)\n",
+                names[product_index], prices[product_index], receipt_quantities[i], receipt_prices[i], discounts[product_index]);
+        }
     }
+    printf("------------------------------------------------\n");
+    printf("Общая стоимость товаров: %d Юн.\n", total);
+    printf("Общая скидка: %d Юн.\n", total_discount);
+    printf("Итоговая цена: %d Юн.\n", total);
+}
 
-    //итоги
-    calculate_total();
-
-    printf("\n");
-    printf("==================================================\n");
-    printf("                 ЭЛЕКТРОННЫЙ ЧЕК                 \n");
-    printf("==================================================\n");
-    printf("Наименование             Цена   Кол-во   Сумма   \n");
-    printf("--------------------------------------------------\n");
-
-    for (int i = 0; i < current_receipt.item_count; i++) {
-        printf("%-20s   %-5d   %-5d   %-6d\n",
-            current_receipt.items[i].name,
-            current_receipt.items[i].unit_price,
-            current_receipt.items[i].quantity,
-            current_receipt.items[i].total_price);
+// Функция для вывода каталога товаров
+void print_product_catalog() {
+    printf("\n** Литания запуска проведена. Запуск успешен **\n** Блаженны оружейники! Ибо без них нет Империума **\n** Каталог оружия и артефактов Механикума **\n");
+    printf("------------------------------------------------\n");
+    for (int i = 0; i < NUM_PRODUCTS; i++) {
+        printf("Штрих-код: %s, Наименование: %s, Цена: %d Юн., Скидка: %d%%\n",
+            barcodes[i], names[i], prices[i], discounts[i]);
     }
-
-    printf("==================================================\n");
-    printf("Общая стоимость товаров: %d руб.\n", current_receipt.total_cost);
-    printf("Суммарная скидка: %d руб.\n", current_receipt.total_discount);
-    printf("ИТОГО К ОПЛАТЕ: %d руб.\n", current_receipt.final_amount);
-    printf("==================================================\n\n");
+    printf("------------------------------------------------\n");
 }
 
-// Функция для показа всех доступных товаров
-void show_all_products() {
-    printf("\n=== ДОСТУПНЫЕ ТОВАРЫ ===\n");
-    printf("Штрих-код  Наименование              Цена   Скидка\n");
-    printf("--------------------------------------------------\n");
+// Функция для инициализации скидок случайными числами
+void initialize_discounts() {
+    srand(time(NULL));
 
-    for (int i = 0; i < product_count; i++) {
-        printf("%-10s %-25s %-5d %d%%\n",
-            products[i].barcode,
-            products[i].name,
-            products[i].price,
-            products[i].discount);
+    // Генерация случайных скидок для каждого товара (от 5% до 50%, шаг 5%)
+    for (int i = 0; i < NUM_PRODUCTS; i++) {
+        discounts[i] = 5 * (rand() % 10 + 1); // Скидка от 5% до 50%
     }
-    printf("--------------------------------------------------\n");
 }
 
-// Функция для очистки чека
-void clear_receipt() {
-    current_receipt.item_count = 0;
-    current_receipt.total_cost = 0;
-    current_receipt.total_discount = 0;
-    current_receipt.final_amount = 0;
-    printf("Чек очищен.\n");
-}
-
-// Главное меню
-void show_menu() {
-    printf("\n=== ЭЛЕКТРОННАЯ КАССА ===\n");
-    printf("1. Сканировать товар\n");
-    printf("2. Показать описание отсканированного товара\n");
-    printf("3. Добавить товар в чек\n");
-    printf("4. Сформировать чек за покупку\n");
-    printf("5. Рассчитать итоговую сумму к оплате\n");
-    printf("6. Показать все доступные товары\n");
-    printf("7. Очистить чек\n");
-    printf("0. Выход\n");
-    printf("Выберите действие: ");
-}
-
-// Основная функция
+// Основная функция программы
 int main() {
+    char* locale =setlocale(LC_ALL, "");
+    char barcode[5];
+    int quantity;
     int choice;
 
-    // Инициализация чека
-    current_receipt.item_count = 0;
-    current_receipt.total_cost = 0;
-    current_receipt.total_discount = 0;
-    current_receipt.final_amount = 0;
+    initialize_discounts();
 
-    printf("Добро пожаловать в программу 'Электронная касса'!\n");
+    print_product_catalog();
 
-    do {
-        show_menu();
-        scanf("%d", &choice);
+    while (1) {
+        printf("\n** Главный интерфейс. Состояние машинного духа: спокойное. Список алгоритмов: подготовлен **\n");
+        printf("1. Сканировать артефакт\n");
+        printf("2. Печать чека\n");
+        printf("3. Литания завершения алгоритма\n");
+        printf("Выберите действие: ");
+        scanf_s("%d", &choice);
 
-        switch (choice) {
-        case 1:
-            scan_product();
-            break;
-        case 2:
-            show_product_description();
-            break;
-        case 3:
-            add_to_receipt();
-            break;
-        case 4:
-            print_receipt();
-            break;
-        case 5:
-            calculate_total();
-            break;
-        case 6:
-            show_all_products();
-            break;
-        case 7:
-            clear_receipt();
-            break;
-        case 0:
-            printf("Выход из программы. До свидания!\n");
-            break;
-        default:
-            printf("Неверный выбор! Попробуйте снова.\n");
+        if (choice == 1) {
+            printf("Введите штрих-код артефакта (4 руны): ");
+            scanf_s("%s", barcode, sizeof(barcode));
+
+            int product_index = find_product_by_barcode(barcode);
+            if (product_index != -1) {
+                printf("Артефакт найден: %s, Цена: %d Юн., Скидка: %d%%\n", names[product_index], prices[product_index], discounts[product_index]);
+                printf("Введите количество: ");
+                scanf_s("%d", &quantity);
+                add_to_receipt(product_index, quantity);
+            }
+            else {
+                printf("Этот артефакт не найден в архивах Механикума! Возможно, он был утерян во время варп-перехода.\n");
+            }
         }
-    } while (choice != 0);
+        else if (choice == 2) {
+            print_receipt();
+        }
+        else if (choice == 3) {
+            printf("Литания завершения алгоритма. Слава Омниссии\n");
+            break;
+        }
+        else {
+            printf("Ошибка! Вы нарушили алгоритм. Позовите техножреца и повторите литанию запуска.\n");
+        }
+    }
 
     return 0;
 }
