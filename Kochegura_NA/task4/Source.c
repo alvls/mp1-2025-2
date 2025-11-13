@@ -113,6 +113,7 @@ void scanProduct() {
     printf("Price: %d rub.\n", products[found].price);
     printf("Discount: %d%%\n", products[found].discount);
 
+    int full_price = products[found].price;
     int price_with_discount = products[found].price * (100 - products[found].discount) / 100;
     for (int j = 0; j < receipt_count; j++) {
         if (strcmp(receipt[j].tovar, products[found].tovar) == 0) {
@@ -124,8 +125,8 @@ void scanProduct() {
     }
 
     if (receipt_count < 10) {
-        int r = strcpy_s(receipt[receipt_count].tovar, sizeof(receipt[receipt_count].tovar), products[i].tovar);
-        receipt[receipt_count].price = price_with_discount;
+        int r = strcpy_s(receipt[receipt_count].tovar, sizeof(receipt[receipt_count].tovar), products[found].tovar);
+        receipt[receipt_count].price = full_price;
         receipt[receipt_count].quantity = 1;
         receipt[receipt_count].total = price_with_discount;
         receipt_count++;
@@ -138,23 +139,28 @@ void scanProduct() {
 }
 
 void showReceipt() {
+    int summ_oplati = 0;
     if (receipt_count == 0) {
         printf("zero chek!\n");
         return;
     }
 
     printf("\n=== CHEK ===\n");
-    printf("Tovar\t\t Price\t total\t Summ\n");
-    printf("--------------------------------\n");
+    printf("Tovar\t\t Price\t Total\t Summ\t Discount\n");
+    printf("------------------------------------------------\n");
 
     for (int i = 0; i < receipt_count; i++) {
-        printf("%s\t\t%d\t%d\t%d\n",
+        summ_oplati += receipt[i].total;
+        printf("%s\t\t%d\t%d\t%d\t(%d %%)\n",
             receipt[i].tovar,
             receipt[i].price,
             receipt[i].quantity,
-            receipt[i].total);
+            receipt[i].total,
+            products[i].discount);
     }
-    printf("--------------------------------\n");
+    printf("------------------------------------------------\n");
+    printf("Full payment =  %d rub.\n", summ_oplati);
+    printf("------------------------------------------------\n");
 }
 
 void calculateTotal() {
