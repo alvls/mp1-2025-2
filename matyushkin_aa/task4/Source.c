@@ -54,7 +54,7 @@ Product* find_product(const char* barcode) {
 void scan_product() {
     char barcode[5];
     printf("¬ведите штрих-код (4 цифры): ");
-    scanf_s("%4s", barcode);
+    scanf_s("%4s", barcode, (unsigned)sizeof(barcode));
 
     Product* product = find_product(barcode);
     if (product) {
