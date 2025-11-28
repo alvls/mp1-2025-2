@@ -18,7 +18,7 @@ void scan(int a[4])
 void output(int arr[4],char* item[],unsigned buy[],unsigned sell[])
 {
     int a = arr[0] * 1000 + arr[1] * 100 + arr[2] * 10 + arr[3];
-    printf("Наиминование товара: %s\nЦена: %i\nСкидка: %i\%\nШтрихкод: ",item[a],buy[a],sell[a]);
+    printf("Наиминование товара: %s\nЦена: %i\nСкидка: %i\%\nШтрихкод: ",item[arr[0] * 1000 + arr[1] * 100 + arr[2] * 10 + arr[3]],buy[a],sell[a]);
     for (int i = 0; i < 4; i++)
     {
         printf("%i", arr[i]);
