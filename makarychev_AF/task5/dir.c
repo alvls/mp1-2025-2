@@ -145,7 +145,9 @@ void merge(direct* cat,int left,int mid,int right,direct*temp)
 	while (j <= right) {
 		temp[k++] = cat[j++];
 	}
-	memcpy(cat, temp, sizeof(*cat) / sizeof(direct));
+	for (int idx = left; idx <= right; idx++) {
+		cat[idx] = temp[idx];
+	}
 }
 void mergeSort(direct* cat, int size)
 {
