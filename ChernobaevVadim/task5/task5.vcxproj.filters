@@ -11,7 +11,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="task4.c">
+    <ClCompile Include="task5FileManager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
