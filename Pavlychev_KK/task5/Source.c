@@ -538,6 +538,6 @@ void countingSort(FileInfo* arr, int n, int ascending) {
         arr[i] = output[i];
     }
 
-    free(count);
+    free(count); //@#$$@$@
     free(output);
 }
