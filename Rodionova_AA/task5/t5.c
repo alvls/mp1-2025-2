@@ -13,8 +13,12 @@ struct s
     char name[256]; unsigned int size;
 };
 typedef struct s ifile;
-
-void sp1(ifile* arr, int size)
+void copy_array(ifile * whereto, ifile* wherefrom, int count)
+{
+    for (int i = 0; i < count; i++)
+        whereto[i] = wherefrom[i];
+}
+void bubble(ifile* arr, int size)
 {
     ifile t;
     for (int i = 0; i < size; i++)
@@ -30,7 +34,7 @@ void sp1(ifile* arr, int size)
         }
     }
 }
-void sp2(ifile* arr, int size)
+void choice(ifile* arr, int size)
 {
     ifile t;
     int m;
@@ -52,7 +56,7 @@ void sp2(ifile* arr, int size)
         }
     }
 }
-void sp3(ifile* arr, int size)
+void inserts(ifile* arr, int size)
 {
     ifile t;
     int j;
@@ -68,7 +72,7 @@ void sp3(ifile* arr, int size)
         arr[j + 1] = t;
     }
 }
-void sp4a(ifile* arr, int left, int m, int right, ifile* t)
+void mergera(ifile* arr, int left, int m, int right, ifile* t)
 {
     int i = left;
     int j = m + 1;
@@ -97,7 +101,7 @@ void sp4a(ifile* arr, int left, int m, int right, ifile* t)
         arr[x] = t[x];
     }
 }
-void sp4(ifile* arr, int size)
+void merger(ifile* arr, int size)
 {
     ifile* t = malloc(size * sizeof(ifile));
     for (int curr_size = 1; curr_size < size; curr_size *= 2) 
@@ -114,7 +118,7 @@ void sp4(ifile* arr, int size)
             {
                 end = size - 1;
             }
-            sp4a(arr, start, m, end, t);
+            mergera(arr, start, m, end, t);
         }
     }
     free(t);
@@ -136,7 +140,7 @@ int srav(ifile a, ifile b)
     }
     return r;
 }
-void sp6(ifile* arr, int size)
+void Shell(ifile* arr, int size)
 {
     ifile t;
     for (int s = size / 2; s > 0; s /= 2)
@@ -152,7 +156,7 @@ void sp6(ifile* arr, int size)
         }
     }
 }
-void sp7(ifile* arr, int size)
+void counting(ifile* arr, int size)
 {
     unsigned int min_size = arr[0].size;
     unsigned int max_size = arr[0].size;
@@ -202,6 +206,7 @@ int main(void)
     double d, e;
 
     ifile* arr = malloc(size * sizeof(ifile));
+    ifile* arr_copy= malloc(size * sizeof(ifile));
     do
     {
         printf("выберите действие\n");
@@ -237,6 +242,8 @@ int main(void)
                     count++;
                 } while (_findnext(hFile, &c_file) == 0);
                 _findclose(hFile);
+                arr_copy = malloc(count * sizeof(ifile));
+                copy_array(arr_copy, arr, count);
             }
             continue;
 
@@ -260,55 +267,62 @@ int main(void)
             {
             case 1:
             {
+                copy_array(arr_copy, arr, count);
                 d = omp_get_wtime();
-                sp1(arr, count);
+                bubble(arr_copy, count);
                 e = omp_get_wtime();
                 printf("сортировка завершена за время: %lf\n", e - d);
                 continue;
             }
             case 2:
             {
+                copy_array(arr_copy, arr, count);
                 d = omp_get_wtime();
-                sp2(arr, count);
+                choice(arr_copy, count);
                 e = omp_get_wtime();
                 printf("сортировка завершена за время: %lf\n", e - d);
                 continue;
             }
             case 3:
             {
+                copy_array(arr_copy, arr, count);
                 d = omp_get_wtime();
-                sp3(arr, count);
+                inserts(arr_copy, count);
                 e = omp_get_wtime();
                 printf("сортировка завершена за время: %lf\n", e - d);
                 continue;
             }
             case 4:
             {
+                copy_array(arr_copy, arr, count);
                 d = omp_get_wtime();
-                sp4(arr, count);
+                merger(arr_copy, count);
                 e = omp_get_wtime();
                 printf("сортировка завершена за время: %lf\n", e - d);
                 continue;
             }
             case 5:
             {
+                copy_array(arr_copy, arr, count);
                 d = omp_get_wtime();
-                qsort(arr, count, sizeof(ifile), srav);
+                qsort(arr_copy, count, sizeof(ifile), srav);
                 e = omp_get_wtime();
                 printf("сортировка завершена за время: %lf\n", e - d);
                 continue;
             }
             case 6:
             {
+                copy_array(arr_copy, arr, count);
                 d = omp_get_wtime();
-                sp6(arr, count);
+                Shell(arr_copy, count);
                 e = omp_get_wtime();
                 printf("сортировка завершена за время: %lf\n", e - d);
                 continue;
             }
             case 7:
             {
-                sp7(arr, count);
+                copy_array(arr_copy, arr, count);
+                counting(arr_copy, count);
                 continue;
             }
             default:
@@ -323,14 +337,14 @@ int main(void)
             {
                 for (int i = 0; i < count; i++)
                 {
-                    printf("%-12.12s %.24s  %10ld\n", arr[i].name, " ", arr[i].size);
+                    printf("%-12.12s %.24s  %10ld\n", arr_copy[i].name, " ", arr_copy[i].size);
                 }
             }
             else
             {
                 for (int i = count-1; i >=0; i--)
                 {
-                    printf("%-12.12s %.24s  %10ld\n", arr[i].name, " ", arr[i].size);
+                    printf("%-12.12s %.24s  %10ld\n", arr_copy[i].name, " ", arr_copy[i].size);
                 }
             }
             continue;
@@ -344,4 +358,5 @@ int main(void)
         }
     }while (1);
     free(arr);
+    free(arr_copy);
 }
