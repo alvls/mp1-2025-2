@@ -6,7 +6,7 @@
 #include <string.h>
 #include <locale.h>
 #include <time.h>
-
+#include <omp.h>
 #define MAX_FILES 1000
 
 typedef struct {
@@ -22,7 +22,8 @@ void counting(filesinf files[], int size, char path[300], int chek) {
         files1[i].time_write = files[i].time_write;
         strcpy(files1[i].name, files[i].name);
     }
-    clock_t start = clock();
+    double start, end;
+    start = omp_get_wtime();
     int max=-1;
     for (int i = 0; i < size; i++) {
         if (max < files1[i].size) {
@@ -67,8 +68,7 @@ void counting(filesinf files[], int size, char path[300], int chek) {
     }
     free(count);
     free(temp);
-    clock_t end = clock();
-    clock_t ticks = end - start;
+    end = omp_get_wtime();
     printf("\nСписок файлов в: %s\n\n", path);
     printf("ФАЙЛ         ДАТА %24c   РАЗМЕР\n", ' ');
     printf("----         ---- %24c   ------\n", ' ');
@@ -77,12 +77,12 @@ void counting(filesinf files[], int size, char path[300], int chek) {
         ctime_s(buffer, _countof(buffer), &files1[i].time_write);
         printf("%-12.12s %.24s  %10ld\n", files1[i].name, buffer, files1[i].size);
     }
-    if ((double)ticks / CLOCKS_PER_SEC * 1000 == 0) {
+    if (end - start == 0) {
         printf("Время слишком мало для точного измерения\n");
         printf("Повторите с большим объемом данных\n");
     }
     else {
-        printf("Время сортировки: % .3f мс\n", (double)ticks / CLOCKS_PER_SEC * 1000);
+        printf("Время выполнения: %.6f секунд\n", end - start);
     }
 }
 
@@ -93,7 +93,8 @@ void shell(filesinf files[], int size, char path[300], int chek) {
         files1[i].time_write = files[i].time_write;
         strcpy(files1[i].name, files[i].name);
     }
-    clock_t start = clock();
+    double start, end;
+    start = omp_get_wtime();
     if (chek == 1) {
         for (int i = size / 2; i > 0; i /= 2) {
             for (int ii = i; ii < size; ++ii) {
@@ -118,8 +119,7 @@ void shell(filesinf files[], int size, char path[300], int chek) {
             }
         }
     }
-    clock_t end = clock();
-    clock_t ticks = end - start;
+    end = omp_get_wtime();
     printf("\nСписок файлов в: %s\n\n", path);
     printf("ФАЙЛ         ДАТА %24c   РАЗМЕР\n", ' ');
     printf("----         ---- %24c   ------\n", ' ');
@@ -128,12 +128,12 @@ void shell(filesinf files[], int size, char path[300], int chek) {
         ctime_s(buffer, _countof(buffer), &files1[i].time_write);
         printf("%-12.12s %.24s  %10ld\n", files1[i].name, buffer, files1[i].size);
     }
-    if ((double)ticks / CLOCKS_PER_SEC * 1000 == 0) {
+    if (end - start == 0) {
         printf("Время слишком мало для точного измерения\n");
         printf("Повторите с большим объемом данных\n");
     }
     else {
-        printf("Время сортировки: % .3f мс\n", (double)ticks / CLOCKS_PER_SEC * 1000);
+        printf("Время выполнения: %.6f секунд\n", end - start);
     }
 }
 
@@ -182,14 +182,14 @@ void hoara(filesinf files[], int size, char path[300], int chek) {
         files1[i].time_write = files[i].time_write;
         strcpy(files1[i].name, files[i].name);
     }
-    clock_t start = clock();
+    double start, end;
+    start = omp_get_wtime();
     filesinf* temp = (filesinf*)malloc(size * sizeof(filesinf));
     for (int i = 0; i < size; i++) {
         temp[i] = files1[i];
     }
     hoara1(temp, 0, size - 1, chek);
-    clock_t end = clock();
-    clock_t ticks = end - start;
+    end = omp_get_wtime();
     printf("\nСписок файлов в: %s\n\n", path);
     printf("ФАЙЛ         ДАТА %24c   РАЗМЕР\n", ' ');
     printf("----         ---- %24c   ------\n", ' ');
@@ -198,12 +198,12 @@ void hoara(filesinf files[], int size, char path[300], int chek) {
         ctime_s(buffer, _countof(buffer), &temp[i].time_write);
         printf("%-12.12s %.24s  %10d\n", temp[i].name, buffer, temp[i].size);
     }
-    if ((double)ticks / CLOCKS_PER_SEC * 1000 == 0) {
+    if (end - start == 0) {
         printf("Время слишком мало для точного измерения\n");
         printf("Повторите с большим объемом данных\n");
     }
     else {
-        printf("Время сортировки: % .3f мс\n", (double)ticks / CLOCKS_PER_SEC * 1000);
+        printf("Время выполнения: %.6f секунд\n", end - start);
     }
     free(temp);
 }
@@ -274,14 +274,14 @@ void merge(filesinf files[], int size, char path[300], int chek) {
         files1[i].time_write = files[i].time_write;
         strcpy(files1[i].name, files[i].name);
     }
-    clock_t start = clock();
+    double start, end;
+    start = omp_get_wtime();
     filesinf* temp = (filesinf*)malloc(size * sizeof(filesinf));
     for (int i = 0; i < size; i++) {
         temp[i] = files1[i];
     }
     merge2(temp, 0, size - 1, chek);
-    clock_t end = clock();
-    clock_t ticks = end - start;
+    end = omp_get_wtime();
     printf("\nСписок файлов в: %s\n\n", path);
     printf("ФАЙЛ         ДАТА %24c   РАЗМЕР\n", ' ');
     printf("----         ---- %24c   ------\n", ' ');
@@ -290,12 +290,12 @@ void merge(filesinf files[], int size, char path[300], int chek) {
         ctime_s(buffer, _countof(buffer), &temp[i].time_write);
         printf("%-12.12s %.24s  %10ld\n", temp[i].name, buffer, temp[i].size);
     }
-    if ((double)ticks / CLOCKS_PER_SEC * 1000 == 0) {
+    if (end - start == 0) {
         printf("Время слишком мало для точного измерения\n");
         printf("Повторите с большим объемом данных\n");
     }
     else {
-        printf("Время сортировки: % .3f мс\n", (double)ticks / CLOCKS_PER_SEC * 1000);
+        printf("Время выполнения: %.6f секунд\n", end - start);
     }
     free(temp);
 }
@@ -307,7 +307,8 @@ void insert(filesinf files[], size_t size, char path[300], int chek) {
         files1[i].time_write = files[i].time_write;
         strcpy(files1[i].name, files[i].name);
     }
-    clock_t start = clock();
+    double start, end;
+    start = omp_get_wtime();
     filesinf temp[MAX_FILES];
     for (int i = 0; i < size; i++) {
         strcpy(temp[i].name, files1[i].name);
@@ -344,8 +345,7 @@ void insert(filesinf files[], size_t size, char path[300], int chek) {
             temp[j + 1].time_write = key.time_write;
         }
     }
-    clock_t end = clock();
-    clock_t ticks = end - start;
+    end = omp_get_wtime();
     printf("\nСписок файлов в: %s\n\n", path);
     printf("ФАЙЛ         ДАТА %24c   РАЗМЕР\n", ' ');
     printf("----         ---- %24c   ------\n", ' ');
@@ -354,12 +354,12 @@ void insert(filesinf files[], size_t size, char path[300], int chek) {
         ctime_s(buffer, _countof(buffer), &temp[i].time_write);
         printf("%-12.12s %.24s  %10d\n", temp[i].name, buffer, temp[i].size);
     }
-    if ((double)ticks / CLOCKS_PER_SEC * 1000 == 0) {
+    if (end - start == 0) {
         printf("Время слишком мало для точного измерения\n");
         printf("Повторите с большим объемом данных\n");
     }
     else {
-        printf("Время сортировки: % .3f мс\n", (double)ticks / CLOCKS_PER_SEC * 1000);
+        printf("Время выполнения: %.6f секунд\n", end - start);
     }
 }
 
@@ -370,7 +370,8 @@ void choice(filesinf files[], size_t size, char path[300], int chek) {
         files1[i].time_write = files[i].time_write;
         strcpy(files1[i].name, files[i].name);
     }
-    clock_t start = clock();
+    double start, end;
+    start = omp_get_wtime();
     if (chek == 1) {
         for (int i = 0; i < size - 1; i++) {
             filesinf min;
@@ -418,8 +419,7 @@ void choice(filesinf files[], size_t size, char path[300], int chek) {
             }
         }
     }
-    clock_t end = clock();
-    clock_t ticks = end - start;
+    end = omp_get_wtime();
     printf("\nСписок файлов в: %s\n\n", path);
     printf("ФАЙЛ         ДАТА %24c   РАЗМЕР\n", ' ');
     printf("----         ---- %24c   ------\n", ' ');
@@ -428,12 +428,12 @@ void choice(filesinf files[], size_t size, char path[300], int chek) {
         ctime_s(buffer, _countof(buffer), &files1[i].time_write);
         printf("%-12.12s %.24s  %10ld\n", files1[i].name, buffer, files1[i].size);
     }
-    if ((double)ticks / CLOCKS_PER_SEC * 1000 == 0) {
+    if (end - start == 0) {
         printf("Время слишком мало для точного измерения\n");
         printf("Повторите с большим объемом данных\n");
     }
     else {
-        printf("Время сортировки: % .3f мс\n", (double)ticks / CLOCKS_PER_SEC * 1000);
+        printf("Время выполнения: %.6f секунд\n", end - start);
     }
 }
 
@@ -444,7 +444,8 @@ void buble(filesinf files[], size_t size, char path[300], int chek) {
         files1[i].time_write = files[i].time_write;
         strcpy(files1[i].name, files[i].name);
     }
-    clock_t start = clock();
+    double start, end;
+    start = omp_get_wtime();
     if (chek == 1) {
         for (int i = 1; i < size; i++) {
             for (int ii = size - 1; ii > i - 1; ii--) {
@@ -481,8 +482,7 @@ void buble(filesinf files[], size_t size, char path[300], int chek) {
             }
         }
     }
-    clock_t end = clock();
-    clock_t ticks = end - start;
+    end = omp_get_wtime();
     printf("\nСписок файлов в: %s\n\n", path);
     printf("ФАЙЛ         ДАТА %24c   РАЗМЕР\n", ' ');
     printf("----         ---- %24c   ------\n", ' ');
@@ -491,12 +491,12 @@ void buble(filesinf files[], size_t size, char path[300], int chek) {
         ctime_s(buffer, _countof(buffer), &files1[i].time_write);
         printf("%-12.12s %.24s  %10ld\n", files1[i].name, buffer, files1[i].size);
     }
-    if ((double)ticks / CLOCKS_PER_SEC * 1000 == 0){
+    if (end - start == 0) {
         printf("Время слишком мало для точного измерения\n");
         printf("Повторите с большим объемом данных\n");
     }
     else {
-        printf("Время сортировки: % .3f мс\n", (double)ticks / CLOCKS_PER_SEC * 1000);
+        printf("Время выполнения: %.6f секунд\n", end - start);
     }
 }
 int main(void){
