@@ -187,9 +187,9 @@ void hoara(filesinf files[], int size, char path[300], int chek) {
     for (int i = 0; i < size; i++) {
         temp[i] = files1[i];
     }
+    hoara1(temp, 0, size - 1, chek);
     clock_t end = clock();
     clock_t ticks = end - start;
-    hoara1(temp, 0, size - 1, chek);
     printf("\nÑïèñîê ôàéëîâ â: %s\n\n", path);
     printf("ÔÀÉË         ÄÀÒÀ %24c   ÐÀÇÌÅÐ\n", ' ');
     printf("----         ---- %24c   ------\n", ' ');
@@ -279,9 +279,9 @@ void merge(filesinf files[], int size, char path[300], int chek) {
     for (int i = 0; i < size; i++) {
         temp[i] = files1[i];
     }
+    merge2(temp, 0, size - 1, chek);
     clock_t end = clock();
     clock_t ticks = end - start;
-    merge2(temp, 0, size - 1, chek);
     printf("\nÑïèñîê ôàéëîâ â: %s\n\n", path);
     printf("ÔÀÉË         ÄÀÒÀ %24c   ÐÀÇÌÅÐ\n", ' ');
     printf("----         ---- %24c   ------\n", ' ');
