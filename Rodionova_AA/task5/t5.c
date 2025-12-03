@@ -204,6 +204,7 @@ int main(void)
     char path[200];
     int a, size = 4, count = 0, b=0, c=0;
     double d, e;
+    int exit = 0;
 
     ifile* arr = malloc(size * sizeof(ifile));
     ifile* arr_copy= malloc(size * sizeof(ifile));
@@ -351,12 +352,13 @@ int main(void)
         }
         case 4:
         {
+            exit = 1;
             break;
         }
         default:
             continue;
         }
-    }while (1);
+    }while (exit=0);
     free(arr);
     free(arr_copy);
 }
