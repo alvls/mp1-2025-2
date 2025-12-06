@@ -25,18 +25,21 @@ int get_files(char* path, struct file_info** files_ptr, int* capacity_ptr) {
 
     do {
         if (count >= *capacity_ptr) {
-            *capacity_ptr *= 2;
-            files_ptr = (struct file_info*)realloc(*files_ptr, (*capacity_ptr) * sizeof(struct file_info));
-            if (!*files_ptr) {
+            //*capacity_ptr *= 2;
+            int new_capacity = *capacity_ptr * 2;
+            //files_ptr = (struct file_info*)realloc(*files_ptr, (*capacity_ptr) * sizeof(struct file_info));
+            struct file_info* new_ptr = realloc(*files_ptr, new_capacity * sizeof(struct file_info));
+
+            if (!new_ptr) {
                 printf("Memory reallocation failed\n");
                 _findclose(hFile);
                 return count;
             }
+
+            *files_ptr = new_ptr;
+            *capacity_ptr = new_capacity;
         }
 
-        /*strncpy(files[count].name, c_file.name, 255);
-        files[count].name[255] = '\0';
-        files[count].size = c_file.size;*/
         strncpy((*files_ptr)[count].name, c_file.name, 255);
         (*files_ptr)[count].name[255] = '\0';
         (*files_ptr)[count].size = c_file.size;
