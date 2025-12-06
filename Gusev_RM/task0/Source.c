@@ -14,13 +14,17 @@ void main() {
 	scanf_s("%f", &r2);
 	rast = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 	if ((rast < r1 + r2) && rast > fabs(r1 - r2)) {
-		printf("окружности пересекаются в двух точках\n");
+		printf("Окружности пересекаются в двух точках\n");
 	}
-	if (rast == r1 + r2 || rast == fabs(r1 - r2)) {
-		printf("окружности пересекаются в одной точке\n");
+	else if (rast == 0 && r1 == r2) {
+		printf("Окружности совпадают\n");
 	}
-	if (rast > r1 + r2 || rast < fabs(r1 - r2)) {
-		printf("окружности не пересекаются\n");
+	else if (rast == r1 + r2 || rast == fabs(r1 - r2)) {
+		printf("Окружности пересекаются в одной точке\n");
 	}
+	else if (rast > r1 + r2 || rast < fabs(r1 - r2)) {
+		printf("Окружности не пересекаются\n");
+	}
+	
 	system("pause");
 }

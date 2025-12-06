@@ -3,76 +3,76 @@
 #include <stdlib.h>
 
 int main() {
-	setlocale(LC_ALL, "rus");
+    setlocale(LC_ALL, "Ru_ru.UTF8");
 
-	int barcodes[5] = {5628, 2321, 4167, 3412, 5467};
-	char names[5][15] = {
-		"молоко",
-		"сыр",
-		"Шоколад",
-		"вода",
-		"йогурт"
-	};
+    int barcodes[5] = { 5628, 2321, 4167, 3412, 5467 };
+    char names[5][15] = {
+        "РјРѕР»РѕРєРѕ",
+        "СЃС‹СЂ",
+        "РЁРѕРєРѕР»Р°Рґ",
+        "РІРѕРґР°",
+        "Р№РѕРіСѓСЂС‚"
+    };
 
-	int prices[5] = { 80, 120, 60, 40, 50 };
-	int discounts[5] = { 10, 15, 20, 5, 10 };
-	char continue_purchasing = 'y';
-	int user_barcode;
-	int quantities[5] = { 0 };
-	
+    int prices[5] = { 80, 120, 60, 40, 50 };
+    int discounts[5] = { 10, 15, 20, 5, 10 };
+    char continue_purchasing = 'y';
+    int user_barcode;
+    int quantities[5] = { 0 };
 
-	printf("Товары в магазине:\n");
-	for (int i = 0; i < 5; i++) {
-		printf("%d - %s - %d руб - скидка %d%%\n", barcodes[i], names[i], prices[i], discounts[i]);
-	}
-	
 
-	while (continue_purchasing == 'y') {
-		printf("Введите штрих-код товара, который вы хотите купить (4 цифры): \n");
-		scanf_s("%d", &user_barcode);
-		if (user_barcode < 1000 || user_barcode > 9999) {
-			printf("Ошибка! Штрих-код должен состоять из 4 цифр\n");
-		}
-		int found = 0;
-		int product_index;
-		for (int i = 0; i < 5; i++) {
-			if (user_barcode == barcodes[i]) {
-				found = 1;
-				product_index = i;
-				break;
-			}
-		}
-		if (found == 1) {
-			quantities[product_index]++;
-			printf("Товар %s по стоимости %d руб со скидкой %d%% добавлен в корзину\n", names[product_index], prices[product_index], discounts[product_index]);
-		}
-		else {
-			printf("Товар с штрих-кодом %d не найден\n", user_barcode);
-		}
-		printf("Вы хотите продолжить покупки? (y/n): \n");
-		scanf_s(" %c", &continue_purchasing, 1);
-	}
-	printf("\n=== ВАШ ЧЕК ===\n");
-	int total = 0;
-	int total_discount = 0;
+    printf("РўРѕРІР°СЂС‹ РІ РјР°РіР°Р·РёРЅРµ:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("%d - %s - %d СЂСѓР± - СЃРєРёРґРєР° %d%%\n", barcodes[i], names[i], prices[i], discounts[i]);
+    }
 
-	for (int i = 0; i < 5; i++) {
-		if (quantities[i] > 0) {
-			int price = prices[i];
-			int quantity = quantities[i];
-			int discount = discounts[i];
-			int total_price = price * quantity;
-			int discount_amount = total_price * discount / 100;
-			int final_price = total_price - discount_amount;
 
-			printf("%s - %d руб x %d + скидка %d%% = %d руб\n", names[i], price, quantity, discount, final_price);
-			total += final_price;
-			total_discount += discount_amount;
-		}
-	}
-	printf("======================\n");
-	printf("Итого к оплате: %d руб\n", total);
-	printf("Ваша выгода: %d руб\n", total_discount);
+    while (continue_purchasing == 'y') {
+        printf("Р’РІРµРґРёС‚Рµ С€С‚СЂРёС…-РєРѕРґ С‚РѕРІР°СЂР°, РєРѕС‚РѕСЂС‹Р№ РІС‹ С…РѕС‚РёС‚Рµ РєСѓРїРёС‚СЊ (4 С†РёС„СЂС‹): \n");
+        scanf_s("%d", &user_barcode);
+        if (user_barcode < 1000 || user_barcode > 9999) {
+            printf("РћС€РёР±РєР°! РЁС‚СЂРёС…-РєРѕРґ РґРѕР»Р¶РµРЅ СЃРѕСЃС‚РѕСЏС‚СЊ РёР· 4 С†РёС„СЂ\n");
+        }
+        int found = 0;
+        int product_index;
+        for (int i = 0; i < 5; i++) {
+            if (user_barcode == barcodes[i]) {
+                found = 1;
+                product_index = i;
+                break;
+            }
+        }
+        if (found == 1) {
+            quantities[product_index]++;
+            printf("РўРѕРІР°СЂ %s РїРѕ СЃС‚РѕРёРјРѕСЃС‚Рё %d СЂСѓР± СЃРѕ СЃРєРёРґРєРѕР№ %d%% РґРѕР±Р°РІР»РµРЅ РІ РєРѕСЂР·РёРЅСѓ\n", names[product_index], prices[product_index], discounts[product_index]);
+        }
+        else {
+            printf("РўРѕРІР°СЂ СЃ С€С‚СЂРёС…-РєРѕРґРѕРј %d РЅРµ РЅР°Р№РґРµРЅ\n", user_barcode);
+        }
+        printf("Р’С‹ С…РѕС‚РёС‚Рµ РїСЂРѕРґРѕР»Р¶РёС‚СЊ РїРѕРєСѓРїРєРё? (y/n): \n");
+        scanf_s(" %c", &continue_purchasing, 1);
+    }
+    printf("\n=== Р’РђРЁ Р§Р•Рљ ===\n");
+    int total = 0;
+    int total_discount = 0;
 
-	system("pause");
+    for (int i = 0; i < 5; i++) {
+        if (quantities[i] > 0) {
+            int price = prices[i];
+            int quantity = quantities[i];
+            int discount = discounts[i];
+            int total_price = price * quantity;
+            int discount_amount = total_price * discount / 100;
+            int final_price = total_price - discount_amount;
+
+            printf("%s - %d СЂСѓР± x %d + СЃРєРёРґРєР° %d%% = %d СЂСѓР±\n", names[i], price, quantity, discount, final_price);
+            total += final_price;
+            total_discount += discount_amount;
+        }
+    }
+    printf("======================\n");
+    printf("РС‚РѕРіРѕ Рє РѕРїР»Р°С‚Рµ: %d СЂСѓР±\n", total);
+    printf("Р’Р°С€Р° РІС‹РіРѕРґР°: %d СЂСѓР±\n", total_discount);
+
+    system("pause");
 }
