@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <locale.h>
 
 #define EPS_MIN 0.000001
 #define NMAX_SINGLE 1000
@@ -102,6 +103,7 @@ void print_menu() {
 }
 
 int main() {
+    setlocale(LC_ALL, "rus");
     FuncInfo funcs[4] = {
         {"sin(x)", sin_taylor, sin},
         {"cos(x)", cos_taylor, cos},
