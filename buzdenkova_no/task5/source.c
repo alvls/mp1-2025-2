@@ -86,6 +86,7 @@ int main() {
 
         int choice = 0;
         while (1) {
+            // Внутри цикла выбора метода сортировки, добавим пункт выхода
             printf("\nВыберите метод сортировки:\n");
             printf("1. Пузырьком (Bubble Sort)\n");
             printf("2. Выбором (Selection Sort)\n");
@@ -94,7 +95,7 @@ int main() {
             printf("5. Хоара (Quick Sort)\n");
             printf("6. Шелла (Shell Sort)\n");
             printf("7. Подсчетом (Counting Sort)\n");
-            printf("0. Выбрать другой каталог\n");
+            printf("0. Выход из программы\n"); // добавляем пункт выхода
             printf("Ваш выбор: ");
 
             if (scanf("%d", &choice) != 1) {
@@ -104,11 +105,15 @@ int main() {
             }
             clearInputBuffer();
 
-            if (choice == 0) break;
+            if (choice == 0) {
+                printf("Завершение работы программы.\n");
+                return 0; // завершение программы
+            }
             if (choice < 1 || choice > 7) {
                 printf("Неверный выбор сортировки!\n");
                 continue;
             }
+
 
             FileData* sortedFiles = (FileData*)malloc(count * sizeof(FileData));
             memcpy(sortedFiles, files, count * sizeof(FileData));
