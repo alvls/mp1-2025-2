@@ -6,8 +6,8 @@
 #include <windows.h>
 #include <time.h>
 
-#define MAX_FILES 3500
-#define MAX_NAME 1000
+#define MAX_FILES 100
+#define MAX_NAME 100
 
 struct FileInfo {
     char name[MAX_NAME];
