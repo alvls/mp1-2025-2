@@ -57,34 +57,26 @@ void scanProduct() {
     if (p != NULL) {
         lastProduct = p;
         printf("Товар найден: %s\n", p->name);
+        unsigned int qty = 1; 
+        for (int i = 0; i < cartCount; i++) {
+            if (compare(cart[i].product.barcode, p->barcode) == 0) {
+                cart[i].quantity += qty;
+                printf("Обновлено: %s, теперь кол-во: %u\n", cart[i].product.name, cart[i].quantity);
+                return;
+            }
+        }
+        if (cartCount < MAX_PRODUCTS) {
+            cart[cartCount].product = *p;
+            cart[cartCount].quantity = qty;
+            cartCount++;
+            printf("Добавлено: %s, количество: %u\n", p->name, qty);
+        } else {
+            printf("Корзина полна!\n");
+        }
     } else {
         printf("Товар не найден.\n");
     }
 }
-
-void addToCart() {
-    if (lastProduct == NULL) {
-        printf("Нет выбранного товара. Выполните сканирование.\n");
-        return;
-    }
-    unsigned int qty;
-    printf("Введите количество: ");
-    scanf("%u", &qty);
-   
-    for (int i = 0; i < cartCount; i++) {
-        if (compare(cart[i].product.barcode, lastProduct->barcode) == 0) {
-            cart[i].quantity += qty;
-            printf("Обновлено: %s, %u\n", cart[i].product.name, cart[i].quantity);
-            return;
-        }
-    }
-  
-    cart[cartCount].product = *lastProduct;
-    cart[cartCount].quantity = qty;
-    cartCount++;
-    printf("Добавлено: %s, %u \n", lastProduct->name, qty);
-}
-
 
 void printCheck() {
     if (cartCount == 0) {
@@ -99,11 +91,11 @@ void printCheck() {
         unsigned int qty = cart[i].quantity;
         int price = p.price;
         int fullPrice = price * qty;
-        int discount = fullPrice * p.discount_percent / 100.0;
+        int discount = fullPrice * p.discount_percent / 100;
         int finalPrice = fullPrice - discount;
         total += finalPrice;
         totalDiscount += discount;
-        printf("%-15s %-10d %-10d %-10d\n", p.name, price, qty, finalPrice);
+        printf("%-15s %-10d %-10u %-10d\n", p.name, price, qty, finalPrice);
     }
     printf("\nОбщая скидка: %u руб.\n", totalDiscount);
     printf("Итого к оплате: %u руб.\n", total);
@@ -111,31 +103,27 @@ void printCheck() {
 }
 
 int main() {
-    setlocale(LC_ALL, "rus");
     int choice;
     while(1) {
         printf("\nМеню:\n");
-        printf("1. Сканиовать товар\n");
-        printf("2. Добавить в чек\n");
-        printf("3. Показать чек\n");
-        printf("4. Оплатить\n");
-        printf("5. Выйти\n");
+        printf("1. Сканировать товар и добавить в чек\n");
+        printf("2. Показать чек\n");
+        printf("3. Оплатить\n");
+        printf("4. Выйти\n");
         printf("Выберите: ");
         scanf("%d", &choice);
         switch(choice) {
             case 1:
                 scanProduct();
+                addToCart();
                 break;
             case 2:
-                addToCart();
+                printCheck();
                 break;
             case 3:
                 printCheck();
-                break;
-            case 4:
-                printCheck();
                 return 0;
-            case 5:
+            case 4:
                 printf("Выход.\n");
                 return 0;
             default:
