@@ -49,6 +49,29 @@ Product* findProduct(char *barcode) {
     return NULL;
 }
 
+void addToCart() {
+    if (lastProduct == NULL) {
+        printf("Нет выбранного товара. Выполните сканирование.\n");
+        return;
+    }
+    unsigned int qty;
+    printf("Введите количество: ");
+    scanf("%u", &qty);
+
+    for (int i = 0; i < cartCount; i++) {
+        if (compare(cart[i].product.barcode, lastProduct->barcode) == 0) {
+            cart[i].quantity += qty;
+            printf("Обновлено: %s, %u\n", cart[i].product.name, cart[i].quantity);
+            return;
+        }
+    }
+
+    cart[cartCount].product = *lastProduct;
+    cart[cartCount].quantity = qty;
+    cartCount++;
+    printf("Добавлено: %s, %u \n", lastProduct->name, qty);
+}
+
 void scanProduct() {
     char barcode[5];
     printf("Введите штрихкод (4 символа): ");
@@ -103,6 +126,7 @@ void printCheck() {
 }
 
 int main() {
+    setlocale(LC_ALL, "rus");
     int choice;
     while(1) {
         printf("\nМеню:\n");
