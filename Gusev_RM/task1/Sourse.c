@@ -25,4 +25,3 @@ void main() {
 	printf("%f\n",ves);
 	system("pause");
 
-}	
