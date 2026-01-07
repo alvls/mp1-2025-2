@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <locale.h>
-#include <time.h>
 
 double exp1(double xp, double x, int n)
 {
@@ -95,10 +94,10 @@ void main()
 			case 1:
 			{
 				b = sin(x);
-				printf("эталонное значение %fl\n", b);
+				printf("эталонное значение %lf\n", b);
 				c = taylor(n, acc, sin1, x, sin(x));
-				printf("оценка значения функции %fl\n", c);
-				printf("разница между оценкой и эталонным значением %fl\n", (fabs(b - c)));
+				printf("оценка значения функции %lf\n", c);
+				printf("разница между оценкой и эталонным значением %lf\n", (fabs(b - c)));
 				printf("количество слагаемых, которое было вычислено %d\n", count);
 				break;
 
@@ -106,30 +105,30 @@ void main()
 			case 2:
 			{
 				b = cos(x);
-				printf("эталонное значение %fl\n", b);
+				printf("эталонное значение %lf\n", b);
 				c = taylor(n, acc, cos1, x, cos(x));
-				printf("оценка значения функции %fl\n", c);
-				printf("разница между оценкой и эталонным значением %fl\n", (fabs(b - c)));
+				printf("оценка значения функции %lf\n", c);
+				printf("разница между оценкой и эталонным значением %lf\n", (fabs(b - c)));
 				printf("количество слагаемых, которое было вычислено %d\n", count);
 				break;
 			}
 			case 3:
 			{
 				b = exp(x);
-				printf("эталонное значение %fl\n", b);
+				printf("эталонное значение %lf\n", b);
 				c = taylor(n, acc, exp1, x, exp(x));
-				printf("оценка значения функции %fl\n", c);
-				printf("разница между оценкой и эталонным значением %fl\n", (fabs(b - c)));
+				printf("оценка значения функции %lf\n", c);
+				printf("разница между оценкой и эталонным значением %lf\n", (fabs(b - c)));
 				printf("количество слагаемых, которое было вычислено %d\n", count);
 				break;
 			}
 			case 4:
 			{
-				b = exp(x);
-				printf("эталонное значение %fl\n", b);
-				c = taylor(n, acc, exp1, x, exp(x));
-				printf("оценка значения функции %fl\n", c);
-				printf("разница между оценкой и эталонным значением %fl\n", (fabs(b - c)));
+				b = sinh(x);
+				printf("эталонное значение %lf\n", b);
+				c = taylor(n, acc, sh1, x, sinh(x));
+				printf("оценка значения функции %lf\n", c);
+				printf("разница между оценкой и эталонным значением %lf\n", (fabs(b - c)));
 				printf("количество слагаемых, которое было вычислено %d\n", count);
 				break;
 			}
@@ -159,11 +158,11 @@ void main()
 					b = sin(x);
 					if (n == 1)
 					{
-						printf("эталонное значение %fl\n", b);
+						printf("эталонное значение %lf\n", b);
 						printf("количествово слагаемых - вычисленная оценка значения функции - разница между оценкой и эталонным значением");
 					}
 					c = taylor(n, acc, sin1, x, sin(x));
-					printf("%d %fl %fl\n", &n, &c, (fabs(b - c)));
+					printf("%d %lf %lf\n", &n, &c, (fabs(b - c)));
 					break;
 				}
 				case 2:
@@ -171,11 +170,11 @@ void main()
 					b = cos(x);
 					if (n == 1)
 					{
-						printf("эталонное значение %fl\n", b);
+						printf("эталонное значение %lf\n", b);
 						printf("количествово слагаемых - вычисленная оценка значения функции - разница между оценкой и эталонным значением");
 					}
 					c = taylor(n, acc, cos1, x, cos(x));
-					printf("%d %fl %fl\n", n, c, (fabs(b - c)));
+					printf("%d %lf %lf\n", n, c, (fabs(b - c)));
 					break;
 				}
 				case 3:
@@ -183,11 +182,11 @@ void main()
 					b = exp(x);
 					if (n == 1)
 					{
-						printf("эталонное значение %fl\n", b);
+						printf("эталонное значение %lf\n", b);
 						printf("количествово слагаемых - вычисленная оценка значения функции - разница между оценкой и эталонным значением");
 					}
 					c = taylor(n, acc, exp1, x, exp(x));
-					printf("%d %fl %fl\n", n, c, (fabs(b - c)));
+					printf("%d %lf %lf\n", n, c, (fabs(b - c)));
 					break;
 				}
 				case 4:
@@ -195,17 +194,16 @@ void main()
 					b = sinh(x);
 					if (n == 1)
 					{
-						printf("эталонное значение %fl\n", b);
+						printf("эталонное значение %lf\n", b);
 						printf("количествово слагаемых - вычисленная оценка значения функции - разница между оценкой и эталонным значением");
 					}
 					c = taylor(n, acc, sh1, x, sinh(x));
-					printf("%d %fl %fl\n", n, c, (fabs(b - c)));
+					printf("%d %lf %lf\n", n, c, (fabs(b - c)));
 					break;
 				}
-				break;
 				}
-				break;
 			}
+			break;
 		}
 		case 0:
 		{
@@ -214,5 +212,5 @@ void main()
 		}
 		break;
 		}
-	}while (v == 0);
+	} while (v == 0);
 }
