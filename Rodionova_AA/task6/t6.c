@@ -26,7 +26,7 @@ double cos1(double xp, double x, int n)
 	{
 		return 1;
 	}
-	return fabs(xp) * (x * x / (2 * n * (2 * n + 1))) * pow(-1, n);
+	return fabs(xp) * (x * x / (2 * n * (2 * n - 1))) * pow(-1, n);
 }
 double sh1(double xp, double x, int n)
 {
